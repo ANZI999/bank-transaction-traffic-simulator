@@ -1,6 +1,7 @@
 package com.anzisolutions.bankingsimulator.bankingsystem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class WorkingInternet implements Internet {
 	
@@ -14,6 +15,7 @@ public class WorkingInternet implements Internet {
 	}
 	
 	private ArrayList<String> ibans = new ArrayList<String>();
+	private HashMap<String, Bank> banks = new HashMap<String, Bank>();
 	
 	private WorkingInternet() {}
 	
@@ -27,8 +29,18 @@ public class WorkingInternet implements Internet {
 		 return ibans;
 	}
 
+	@Override
+	public HashMap<String, Bank> getBanks() {
+		return banks;
+	}
+	
+	@Override
+	public void createBank() {
+		Bank bank = new Bank(this);
+		banks.put(Integer.toString(bank.getID()), bank);
+	}
+	
 	public void reset() {
 		ibans = new ArrayList<String>();
 	}
-
 }

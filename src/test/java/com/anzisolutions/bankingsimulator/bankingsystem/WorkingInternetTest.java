@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,9 +20,11 @@ public class WorkingInternetTest {
 	
 	final private static String ADDED_IBAN = "dfsdfsdffdsf";
 	
+	private WorkingInternet internet = WorkingInternet.getInsatnce();
+	
 	@Before 
 	public void setup() {
-		WorkingInternet.getInsatnce().reset();
+		internet.reset();
 	}
 	
 	@Test
@@ -39,9 +42,7 @@ public class WorkingInternetTest {
 	}
 	
 	@Test
-    public void publishIBANSucceedIfIsFirstAccount() throws Exception {
-		Internet internet = WorkingInternet.getInsatnce();
-		
+    public void publishIBANSucceedIfIsFirstAccount() throws Exception {		
 		ArrayList<String> noibans = internet.getIBANs();
 		assertEquals(0, noibans.size());
 		
@@ -53,9 +54,7 @@ public class WorkingInternetTest {
 	}
 	
 	@Test
-    public void resetClearsCurrentState() throws Exception {
-		WorkingInternet internet = WorkingInternet.getInsatnce();
-		
+    public void resetClearsCurrentState() throws Exception {		
 		internet.publishIBAN(ADDED_IBAN);
 		
 		ArrayList<String> oneIban = internet.getIBANs();
@@ -65,5 +64,21 @@ public class WorkingInternetTest {
 		
 		ArrayList<String> noIbans = internet.getIBANs();
 		assertEquals(0, noIbans.size());
+	}
+	
+	@Test
+    public void addBank() throws Exception {
+		HashMap<String, Bank> banks;
+		int endBankCount = 5;
+		
+		banks = internet.getBanks();
+		assertEquals(0, banks.size());
+		
+		for(int i = 0; i < endBankCount; i++) {
+			internet.createBank();
+			banks = internet.getBanks();
+			assertEquals(i + 1, banks.size());
+		}
+		
 	}
 }

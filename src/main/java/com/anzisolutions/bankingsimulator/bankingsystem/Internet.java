@@ -1,6 +1,7 @@
 package com.anzisolutions.bankingsimulator.bankingsystem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface Internet {
 
@@ -8,4 +9,7 @@ public interface Internet {
 
 	ArrayList<String> getIBANs();
 
+	void createBank();
+
+	HashMap<String, Bank> getBanks();
 }
