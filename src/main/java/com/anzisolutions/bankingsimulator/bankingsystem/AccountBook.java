@@ -9,18 +9,19 @@ public class AccountBook {
 	public static final int IBAN_BANK_LENGTH = 3;
 	
 	private int bankID;
-	private HashMap<String, String> accounts;
+	private HashMap<String, Account> accounts;
 	private HashMap<String, ArrayList<String>> userIndex;
 	
 	public AccountBook(int bankID) {
 		this.bankID = bankID;
-		this.accounts = new HashMap<String, String>();
+		this.accounts = new HashMap<String, Account>();
 		this.userIndex = new HashMap<String, ArrayList<String>>();
 	}
 	
-	public void addAccount(String personID) {
+	public String addAccount(String personID) {
 		String iban = generateIBAN();
-		accounts.put(iban, personID);
+		Account account = new Account(iban, personID);
+		accounts.put(iban, account);
 		
 		ArrayList<String> userIbans;
 		if (!userIndex.containsKey(personID)) {
@@ -29,6 +30,8 @@ public class AccountBook {
 		userIbans = userIndex.get(personID);
 		
 		userIbans.add(iban);
+		
+		return iban;
 	}
 
 	public ArrayList<String> getUserAccounts(String personID) {
