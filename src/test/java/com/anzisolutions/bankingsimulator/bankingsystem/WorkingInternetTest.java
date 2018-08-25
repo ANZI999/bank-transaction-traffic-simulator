@@ -15,24 +15,24 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-public class InternetTest {
+public class WorkingInternetTest {
 	
 	final private static String ADDED_IBAN = "dfsdfsdffdsf";
 	
 	@Before 
 	public void setup() {
-		Internet.getInsatnce().reset();
+		WorkingInternet.getInsatnce().reset();
 	}
 	
 	@Test
     public void getInstanceReturnsItself() throws Exception {
-		Internet internet = Internet.getInsatnce();
-		assertThat(internet, instanceOf(Internet.class));	
+		WorkingInternet internet = WorkingInternet.getInsatnce();
+		assertThat(internet, instanceOf(WorkingInternet.class));	
 	}
 	
 	@Test
 	public void constructorsAreAllPrivate() throws Exception {
-		Constructor[] constructors = Internet.class.getDeclaredConstructors();
+		Constructor[] constructors = WorkingInternet.class.getDeclaredConstructors();
 		for(int i = 0; i < constructors.length; i++) {
 			assertTrue(Modifier.isPrivate(constructors[i].getModifiers()));
 		}
@@ -40,7 +40,7 @@ public class InternetTest {
 	
 	@Test
     public void publishIBANSucceedIfIsFirstAccount() throws Exception {
-		Internet internet = Internet.getInsatnce();
+		Internet internet = WorkingInternet.getInsatnce();
 		
 		ArrayList<String> noibans = internet.getIBANs();
 		assertEquals(0, noibans.size());
@@ -54,7 +54,7 @@ public class InternetTest {
 	
 	@Test
     public void resetClearsCurrentState() throws Exception {
-		Internet internet = Internet.getInsatnce();
+		WorkingInternet internet = WorkingInternet.getInsatnce();
 		
 		internet.publishIBAN(ADDED_IBAN);
 		
