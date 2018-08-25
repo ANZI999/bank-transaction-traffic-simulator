@@ -1,5 +1,7 @@
 package com.anzisolutions.bankingsimulator.bankingsystem;
 
+import com.anzisolutions.bankingsimulator.bankingsystem.exception.InsufficientFundsException;
+
 public class Account {
 	private int balance;
 	private String iban;
@@ -17,7 +19,13 @@ public class Account {
 
 	public void increaseBalance(int amount) {
 		balance += amount;
-		
+	}
+	
+	public void decreaseBalance(int amount) throws InsufficientFundsException {
+		if(amount > balance) {
+			throw new InsufficientFundsException();
+		}
+		balance -= amount;
 	}
 
 	public String getIBAN() {

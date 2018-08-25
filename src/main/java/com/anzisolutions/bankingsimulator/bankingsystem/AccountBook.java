@@ -18,6 +18,10 @@ public class AccountBook {
 		this.userIndex = new HashMap<String, ArrayList<String>>();
 	}
 	
+	public Account getAccount(String iban) {
+		return accounts.get(iban);
+	}
+	
 	public String addAccount(String personID) {
 		String iban = generateIBAN();
 		Account account = new Account(iban, personID);
