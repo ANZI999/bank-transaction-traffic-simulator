@@ -32,7 +32,7 @@ public class Bank {
 		return this.id;		
 	}
 
-	public void depositMoney(String personID, String iban, int amount) throws LoginFailedException {
+	public void deposit(String personID, String iban, int amount) throws LoginFailedException {
 		Account account = getAuthentiactedAccount(personID, iban);
 		account.increaseBalance(amount);
 	}
@@ -41,9 +41,27 @@ public class Bank {
 		return getAuthentiactedAccount(personID, iban);		
 	}
 
-	public void withdrawMoney(String personID, String iban, int amount) throws LoginFailedException, InsufficientFundsException {
+	public void withdraw(String personID, String iban, int amount) throws LoginFailedException, InsufficientFundsException {
 		Account account = getAuthentiactedAccount(personID, iban);
 		account.decreaseBalance(amount);
+	}
+	
+	public void transfer(String personID, String fromIban, String toIban, int amount) throws InsufficientFundsException, LoginFailedException {
+		Account fromAccount = getAuthentiactedAccount(personID, fromIban);
+		fromAccount.decreaseBalance(amount);
+		int toBankID = Integer.parseInt(toIban.substring(0, AccountBook.IBAN_BANK_LENGTH));
+		if(toBankID == id) {
+			Account toAccount = accountBook.getAccount(toIban);
+			toAccount.increaseBalance(amount);
+		} else {
+			Bank toBank = internet.getBanks().get(Integer.toString(toBankID));
+			toBank.transfer(id, toIban, amount);
+		}
+	}
+	
+	public void transfer(int bankID, String iban, int amount) {
+		Account toAccount = accountBook.getAccount(iban);
+		toAccount.increaseBalance(amount);
 	}
 	
 	private Account getAuthentiactedAccount(String personID, String iban) throws LoginFailedException {
