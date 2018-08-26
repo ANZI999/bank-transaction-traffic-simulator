@@ -2,6 +2,7 @@ package com.anzisolutions.bankingsimulator.bankingsystem;
 
 import java.util.ArrayList;
 
+import com.anzisolutions.bankingsimulator.Internet;
 import com.anzisolutions.bankingsimulator.bankingsystem.exception.InsufficientFundsException;
 import com.anzisolutions.bankingsimulator.bankingsystem.exception.LoginFailedException;
 

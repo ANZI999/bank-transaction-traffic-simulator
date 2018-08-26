@@ -1,4 +1,4 @@
-package com.anzisolutions.bankingsimulator.bankingsystem;
+package com.anzisolutions.bankingsimulator;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
@@ -14,6 +14,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
 
 @RunWith(SpringRunner.class)
 public class WorkingInternetTest {

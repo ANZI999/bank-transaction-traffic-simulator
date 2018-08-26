@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.anzisolutions.bankingsimulator.Internet;
 import com.anzisolutions.bankingsimulator.bankingsystem.exception.InsufficientFundsException;
 import com.anzisolutions.bankingsimulator.bankingsystem.exception.LoginFailedException;
 import com.anzisolutions.bankingsimulator.util.TestHelper;
