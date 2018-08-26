@@ -1,4 +1,4 @@
-package com.anzisolutions.bankingsimulator.bankingsystem.exception;
+package com.anzisolutions.bankingsimulator.exception;
 
 public class InsufficientFundsException extends Exception {
 

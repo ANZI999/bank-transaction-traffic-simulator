@@ -1,6 +1,6 @@
 package com.anzisolutions.bankingsimulator.bankingsystem;
 
-import com.anzisolutions.bankingsimulator.bankingsystem.exception.InsufficientFundsException;
+import com.anzisolutions.bankingsimulator.exception.InsufficientFundsException;
 
 public class Account {
 	private int balance;
