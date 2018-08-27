@@ -19,17 +19,17 @@ public class DepositMoneyDecision implements Decision {
 	}
 	
 	@Override
-	public void execute(Internet internet, ClientFinances finances) {
-		int depositPercentage = randomness.nextInt(100);
-		int deposit = (int) Math.round(finances.getCash()*depositPercentage/100.0);
-		
-		ArrayList<IBAN> myIbans = finances.getOwnedIbans();
-		
-		int chosenIbanIndex = randomness.nextInt(myIbans.size());
-		IBAN chosenIban = myIbans.get(chosenIbanIndex);
-		Bank bank = internet.getBanks().get(Integer.toString(chosenIban.getBankID()));
-		
+	public void execute(Internet internet, ClientFinances finances) {		
 		try {
+			int depositPercentage = randomness.nextInt(100);
+			int deposit = (int) Math.round(finances.getCash()*depositPercentage/100.0);
+			
+			ArrayList<IBAN> myIbans = finances.getOwnedIbans();
+			
+			int chosenIbanIndex = randomness.nextInt(myIbans.size());
+			IBAN chosenIban = myIbans.get(chosenIbanIndex);
+			Bank bank = internet.getBanks().get(Integer.toString(chosenIban.getBankID()));
+			
 			finances.spendCash(deposit);
 			bank.deposit(finances.getTaxID(), chosenIban, deposit);
 		} catch (InsufficientFundsException | LoginFailedException e) {

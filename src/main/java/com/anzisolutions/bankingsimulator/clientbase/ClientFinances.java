@@ -49,5 +49,9 @@ public class ClientFinances {
 		}
 		cash -= amount;
 	}
+	
+	public void addCash(int amount) {
+		cash += amount;
+	}
 
 }

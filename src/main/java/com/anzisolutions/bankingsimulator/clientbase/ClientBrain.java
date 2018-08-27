@@ -33,7 +33,7 @@ public class ClientBrain {
             	decision = new MakeTransferDecision();
                 break;
             case WITHDRAW_MONEY:  
-            	decision = new WithdrawMoneyDecision();
+            	decision = new WithdrawMoneyDecision(randomness);
                 break;
             default:  
             	decision = new DepositMoneyDecision(randomness);
