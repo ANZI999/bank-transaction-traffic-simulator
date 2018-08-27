@@ -1,10 +1,7 @@
 package com.anzisolutions.bankingsimulator;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.junit.Test;
@@ -14,7 +11,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
 import com.anzisolutions.bankingsimulator.clientbase.ClientFinances;
-import com.anzisolutions.bankingsimulator.util.TestHelper;
 
 @RunWith(SpringRunner.class)
 public class TaxBureauTest {
@@ -50,5 +46,17 @@ public class TaxBureauTest {
 			finances.payday(individualSalry);
 		}
 		assertEquals(clientCount*individualSalry, taxBureau.getTotalSalaryFund());
+	}
+	
+	@Test
+	public void createBankIDsMustBeUnique() throws Exception {		
+		int bankCount = 3;
+		HashSet<String> ids = new HashSet<String>();
+		
+		for(int i = 0; i < bankCount; i++) {
+			Bank bank = taxBureau.createBank();
+			ids.add(Integer.toString(bank.getID()));
+		}
+		assertEquals(bankCount, ids.size());
 	}
 }

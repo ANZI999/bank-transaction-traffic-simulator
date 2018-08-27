@@ -11,7 +11,7 @@ public interface Internet {
 
 	ArrayList<String> getIBANs();
 
-	void createBank();
+	void publishBank(Bank bank);
 
 	HashMap<String, Bank> getBanks();
 }

@@ -30,16 +30,15 @@ public class WorkingInternet implements Internet {
 	public ArrayList<String> getIBANs() {
 		 return ibans;
 	}
+	
+	@Override
+	public void publishBank(Bank bank) {
+		banks.put(Integer.toString(bank.getID()), bank);
+	}
 
 	@Override
 	public HashMap<String, Bank> getBanks() {
 		return banks;
-	}
-	
-	@Override
-	public void createBank() {
-		Bank bank = new Bank(this);
-		banks.put(Integer.toString(bank.getID()), bank);
 	}
 	
 	public void reset() {

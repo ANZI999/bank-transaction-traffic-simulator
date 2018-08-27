@@ -13,9 +13,8 @@ public class Bank {
 	private Internet internet;
 	private AccountBook accountBook;
 	
-	public Bank(Internet internet) {
-		this.id = TaxBureau.getNextBankID();
-		this.internet = internet;
+	public Bank(int id) {
+		this.id = id;
 		this.accountBook = new AccountBook(this.id);
 	}
 
@@ -71,6 +70,11 @@ public class Bank {
 			throw new LoginFailedException();
 		}		
 		return account;
+	}
+
+	public void setInternet(Internet internet) {
+		this.internet = internet;
+		internet.publishBank(this);
 	}
 
 }

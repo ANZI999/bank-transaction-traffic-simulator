@@ -72,15 +72,13 @@ public class WorkingInternetTest {
     public void addBank() throws Exception {
 		HashMap<String, Bank> banks;
 		int endBankCount = 5;
+		TaxBureau taxBureau = new TaxBureau();
 		
 		banks = internet.getBanks();
 		assertEquals(0, banks.size());
 		
-		for(int i = 0; i < endBankCount; i++) {
-			internet.createBank();
-			banks = internet.getBanks();
-			assertEquals(i + 1, banks.size());
-		}
-		
+		internet.publishBank(taxBureau.createBank());
+		banks = internet.getBanks();
+		assertEquals(1, banks.size());		
 	}
 }

@@ -1,6 +1,7 @@
 package com.anzisolutions.bankingsimulator.bankingsystem;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -16,6 +18,7 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.anzisolutions.bankingsimulator.Internet;
+import com.anzisolutions.bankingsimulator.TaxBureau;
 import com.anzisolutions.bankingsimulator.exception.InsufficientFundsException;
 import com.anzisolutions.bankingsimulator.exception.LoginFailedException;
 import com.anzisolutions.bankingsimulator.util.TestHelper;
@@ -28,8 +31,14 @@ public class BankTest {
 	@Mock
 	private Internet internet;
 
-	@InjectMocks
-	private Bank bank;
+	private Bank bank;	
+	private TaxBureau taxBureau = new TaxBureau();
+	
+	@Before
+	public void setUp() {
+		bank = taxBureau.createBank();
+		bank.setInternet(internet);
+	}
 
 	@Test
 	public void createAccount() throws Exception {
@@ -56,16 +65,6 @@ public class BankTest {
 
 		ArrayList<String> accounts = bank.getUserAccounts(TEST_USER_ONE);
 		assertEquals(accountCount, accounts.size());
-	}
-
-	@Test
-	public void banksMustHaveDifferentIDs() throws Exception {
-		int bankCount = 5;
-		HashSet<Integer> differentIDs = new HashSet<Integer>();
-		for (int i = 0; i < bankCount; i++) {
-			differentIDs.add(new Bank(internet).getID());
-		}
-		assertEquals(bankCount, differentIDs.size());
 	}
 
 	@Test
@@ -163,7 +162,8 @@ public class BankTest {
 
 	@Test
 	public void transferToOtherBank() throws Exception {
-		Bank secondBank = new Bank(internet);
+		Bank secondBank = taxBureau.createBank();
+		secondBank.setInternet(internet);
 		HashMap<String, Bank> banks = new HashMap<String, Bank>();
 		banks.put(Integer.toString(secondBank.getID()), secondBank);
 		when(internet.getBanks()).thenReturn(banks);
@@ -183,7 +183,7 @@ public class BankTest {
 
 	@Test
 	public void transferFromAnotherBank() throws Exception {
-		Bank secondBank = new Bank(internet);
+		Bank secondBank = taxBureau.createBank();
 		int transfer = 700;
 
 		String toIban = bank.createAccount(TEST_USER_TWO);
@@ -192,6 +192,13 @@ public class BankTest {
 		Account userTwoAccount = bank.logInToAccount(TEST_USER_TWO, toIban);
 		assertEquals(transfer, userTwoAccount.getBalance());
 
+	}
+	
+	@Test
+	public void setInternet() throws Exception {
+		Bank newBank = taxBureau.createBank();
+		newBank.setInternet(internet);
+		verify(internet, times(1)).publishBank(newBank);
 	}
 
 }
