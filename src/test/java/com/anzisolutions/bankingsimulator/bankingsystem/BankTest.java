@@ -43,7 +43,6 @@ public class BankTest {
 		int bankID = bank.getID();
 
 		TestHelper.assertValidIBAN(iban, bankID);
-		verify(internet, times(1)).publishIBAN(iban);
 
 		ArrayList<String> accounts = bank.getUserAccounts(TEST_USER_ONE);
 		assertEquals(1, accounts.size());
@@ -57,7 +56,6 @@ public class BankTest {
 		for (int i = 0; i < accountCount; i++) {
 			iban = bank.createAccount(TEST_USER_ONE);
 			TestHelper.assertValidIBAN(iban, bankID);
-			verify(internet, times(1)).publishIBAN(iban);
 		}
 
 		ArrayList<String> accounts = bank.getUserAccounts(TEST_USER_ONE);

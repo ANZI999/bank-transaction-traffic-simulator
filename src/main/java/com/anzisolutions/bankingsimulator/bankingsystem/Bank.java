@@ -18,9 +18,7 @@ public class Bank {
 	}
 
 	public String createAccount(String personID) {
-		String iban = accountBook.addAccount(personID);
-		internet.publishIBAN(iban);
-		return iban;
+		return accountBook.addAccount(personID);
 	}
 
 	public ArrayList<String> getUserAccounts(String personID) {
