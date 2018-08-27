@@ -1,12 +1,9 @@
 package com.anzisolutions.bankingsimulator.bankingsystem;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AccountBook {
-	public static final int IBAN_LENGTH = 23;
-	public static final int IBAN_BANK_LENGTH = 3;
 	
 	private int bankID;
 	private HashMap<IBAN, Account> accounts;

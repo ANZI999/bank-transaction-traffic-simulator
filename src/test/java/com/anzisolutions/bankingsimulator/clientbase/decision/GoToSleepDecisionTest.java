@@ -1,6 +1,5 @@
 package com.anzisolutions.bankingsimulator.clientbase.decision;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.Random;
@@ -9,11 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.anzisolutions.bankingsimulator.Internet;
-import com.anzisolutions.bankingsimulator.clientbase.ClientBrain;
 import com.anzisolutions.bankingsimulator.clientbase.ClientFinances;
 
 @RunWith(SpringRunner.class)
