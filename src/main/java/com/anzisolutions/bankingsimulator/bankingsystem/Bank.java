@@ -3,18 +3,18 @@ package com.anzisolutions.bankingsimulator.bankingsystem;
 import java.util.ArrayList;
 
 import com.anzisolutions.bankingsimulator.Internet;
+import com.anzisolutions.bankingsimulator.TaxBureau;
 import com.anzisolutions.bankingsimulator.exception.InsufficientFundsException;
 import com.anzisolutions.bankingsimulator.exception.LoginFailedException;
 
 public class Bank {
-	private static int bankCount = 0;
 	
 	private int id; 
 	private Internet internet;
 	private AccountBook accountBook;
 	
 	public Bank(Internet internet) {
-		this.id = ++bankCount;
+		this.id = TaxBureau.getNextBankID();
 		this.internet = internet;
 		this.accountBook = new AccountBook(this.id);
 	}
