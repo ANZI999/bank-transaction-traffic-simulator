@@ -19,11 +19,11 @@ import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
 import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
 
 @RunWith(SpringRunner.class)
-public class WorkingInternetTest {
+public class InternetImplTest {
 	
 	final private static IBAN ADDED_IBAN = new IBAN(1);
 	
-	private WorkingInternet internet = WorkingInternet.getInsatnce();
+	private InternetImpl internet = InternetImpl.getInsatnce();
 	
 	@Before 
 	public void setup() {
@@ -32,13 +32,13 @@ public class WorkingInternetTest {
 	
 	@Test
     public void getInstanceReturnsItself() throws Exception {
-		WorkingInternet internet = WorkingInternet.getInsatnce();
-		assertThat(internet, instanceOf(WorkingInternet.class));	
+		InternetImpl internet = InternetImpl.getInsatnce();
+		assertThat(internet, instanceOf(InternetImpl.class));	
 	}
 	
 	@Test
 	public void constructorsAreAllPrivate() throws Exception {
-		Constructor[] constructors = WorkingInternet.class.getDeclaredConstructors();
+		Constructor[] constructors = InternetImpl.class.getDeclaredConstructors();
 		for(int i = 0; i < constructors.length; i++) {
 			assertTrue(Modifier.isPrivate(constructors[i].getModifiers()));
 		}

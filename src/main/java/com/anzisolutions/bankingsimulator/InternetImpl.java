@@ -6,13 +6,13 @@ import java.util.HashMap;
 import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
 import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
 
-public class WorkingInternet implements Internet {
+public class InternetImpl implements Internet {
 
-	private static WorkingInternet instance;
+	private static InternetImpl instance;
 
-	public static WorkingInternet getInsatnce() {
+	public static InternetImpl getInsatnce() {
 		if (instance == null) {
-			instance = new WorkingInternet();
+			instance = new InternetImpl();
 		}
 		return instance;
 	}
@@ -20,7 +20,7 @@ public class WorkingInternet implements Internet {
 	private ArrayList<IBAN> ibans = new ArrayList<IBAN>();
 	private HashMap<String, Bank> banks = new HashMap<String, Bank>();
 
-	private WorkingInternet() {
+	private InternetImpl() {
 	}
 
 	@Override
