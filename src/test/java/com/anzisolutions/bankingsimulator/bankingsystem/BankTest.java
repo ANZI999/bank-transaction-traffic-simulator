@@ -1,19 +1,16 @@
 package com.anzisolutions.bankingsimulator.bankingsystem;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -94,8 +91,6 @@ public class BankTest {
 
 	@Test(expected = LoginFailedException.class)
 	public void logInToAccountNotOwned() throws Exception {
-		int depositAmount = 984010;
-
 		String iban = bank.createAccount(TEST_USER_ONE);
 		bank.logInToAccount(TEST_USER_TWO, iban);
 	}

@@ -71,7 +71,6 @@ public class WorkingInternetTest {
 	@Test
     public void addBank() throws Exception {
 		HashMap<String, Bank> banks;
-		int endBankCount = 5;
 		TaxBureau taxBureau = new TaxBureau();
 		
 		banks = internet.getBanks();
