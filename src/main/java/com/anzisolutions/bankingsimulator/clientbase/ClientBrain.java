@@ -24,10 +24,10 @@ public class ClientBrain {
 		Decision decision;
         switch (nextDecision) {
         	case CREATE_ACCOUNT:  
-            	decision = new CreateAccountDecision();
+            	decision = new CreateAccountDecision(randomness);
                 break;                
             case GO_TO_SLEEP:  
-            	decision = new GoToSleepDecision();
+            	decision = new GoToSleepDecision(randomness);
                 break;
             case MAKE_TRANSFER:  
             	decision = new MakeTransferDecision();
