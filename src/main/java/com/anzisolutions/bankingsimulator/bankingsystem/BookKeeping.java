@@ -42,4 +42,10 @@ public class BookKeeping {
 	public int getBankID() {
 		return bankID;
 	}
+
+	public int getAccountTotal() {
+		return accounts.values().stream()
+				.map(account -> account.getBalance())
+				.mapToInt(Integer::intValue).sum();
+	}
 }

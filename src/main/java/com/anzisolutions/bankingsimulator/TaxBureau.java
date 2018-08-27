@@ -3,7 +3,6 @@ package com.anzisolutions.bankingsimulator;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
 import com.anzisolutions.bankingsimulator.bankingsystem.BookKeeping;
 import com.anzisolutions.bankingsimulator.client.Finances;
 
@@ -15,6 +14,7 @@ public class TaxBureau {
 	}
 	
 	private ArrayList<Finances> people = new ArrayList<Finances>();
+	private ArrayList<BookKeeping> businesses = new ArrayList<BookKeeping>();
 
 	public Finances registerClient() {
 		String taxID = UUID.randomUUID().toString();
@@ -30,7 +30,15 @@ public class TaxBureau {
 	}
 
 	public BookKeeping registerBankBookKeeping() {
-		return new BookKeeping(++bankCount);
+		BookKeeping bookKeeping = new BookKeeping(++bankCount);
+		businesses.add(bookKeeping);
+		return bookKeeping;
+	}
+
+	public int getTotalDeposits() {
+		return businesses.stream()
+				.map(business -> business.getAccountTotal())
+				.mapToInt(Integer::intValue).sum();
 	}
 
 }

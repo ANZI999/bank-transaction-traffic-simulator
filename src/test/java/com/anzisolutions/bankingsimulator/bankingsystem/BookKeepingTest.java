@@ -62,4 +62,21 @@ public class BookKeepingTest {
 	    }
     }
 	
+	@Test
+    public void getAccountTotal() throws Exception {
+		BookKeeping bookKeeping = new BookKeeping(BANK_ID);
+		int depositOne = 1090;
+		int depositTwo = 2900;
+		
+		int total = depositOne;
+		IBAN ibanOne = bookKeeping.addAccount("user-1");
+		bookKeeping.getAccount(ibanOne).increaseBalance(depositOne);
+		assertEquals(total, bookKeeping.getAccountTotal());
+		
+		total += depositTwo;
+		IBAN ibanTwo = bookKeeping.addAccount("user-2");
+		bookKeeping.getAccount(ibanTwo).increaseBalance(depositTwo);
+		assertEquals(total, bookKeeping.getAccountTotal());
+    }
+	
 }

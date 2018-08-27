@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
 import com.anzisolutions.bankingsimulator.bankingsystem.BookKeeping;
+import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
 import com.anzisolutions.bankingsimulator.client.Finances;
 
 @RunWith(SpringRunner.class)
@@ -59,5 +60,22 @@ public class TaxBureauTest {
 			ids.add(Integer.toString(bookKeeping.getBankID()));
 		}
 		assertEquals(bankCount, ids.size());
+	}
+	
+	@Test
+	public void getTotalDeposit() throws Exception {		
+		BookKeeping bookeepingOne = taxBureau.registerBankBookKeeping();
+		BookKeeping bookeepingTwo = taxBureau.registerBankBookKeeping();
+		
+		int firstDeposit = 10000;
+		int secondDeposit = 30000;
+		
+		IBAN ibanOne = bookeepingOne.addAccount("person-one");
+		bookeepingOne.getAccount(ibanOne).increaseBalance(firstDeposit);
+		assertEquals(firstDeposit, taxBureau.getTotalDeposits());
+		
+		IBAN ibanTwo = bookeepingTwo.addAccount("person-two");
+		bookeepingTwo.getAccount(ibanTwo).increaseBalance(secondDeposit);
+		assertEquals(firstDeposit + secondDeposit, taxBureau.getTotalDeposits());
 	}
 }
