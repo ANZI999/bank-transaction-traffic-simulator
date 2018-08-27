@@ -1,4 +1,4 @@
-package com.anzisolutions.bankingsimulator.client;
+package com.anzisolutions.bankingsimulator.client.decision;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -11,14 +11,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.anzisolutions.bankingsimulator.client.Brain;
-import com.anzisolutions.bankingsimulator.client.decision.CreateAccountDecision;
-import com.anzisolutions.bankingsimulator.client.decision.Decision;
-import com.anzisolutions.bankingsimulator.client.decision.DepositMoneyDecision;
-import com.anzisolutions.bankingsimulator.client.decision.GoToSleepDecision;
-import com.anzisolutions.bankingsimulator.client.decision.TransferMoneyDecision;
-import com.anzisolutions.bankingsimulator.client.decision.WithdrawMoneyDecision;
 
 @RunWith(SpringRunner.class)
 public class BrainTest {
