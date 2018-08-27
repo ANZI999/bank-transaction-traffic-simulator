@@ -1,8 +1,8 @@
 package com.anzisolutions.bankingsimulator.clientbase;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 import java.util.Random;
 
@@ -16,7 +16,7 @@ import com.anzisolutions.bankingsimulator.clientbase.decision.CreateAccountDecis
 import com.anzisolutions.bankingsimulator.clientbase.decision.Decision;
 import com.anzisolutions.bankingsimulator.clientbase.decision.DepositMoneyDecision;
 import com.anzisolutions.bankingsimulator.clientbase.decision.GoToSleepDecision;
-import com.anzisolutions.bankingsimulator.clientbase.decision.MakeTransferDecision;
+import com.anzisolutions.bankingsimulator.clientbase.decision.TransferMoneyDecision;
 import com.anzisolutions.bankingsimulator.clientbase.decision.WithdrawMoneyDecision;
 
 @RunWith(SpringRunner.class)
@@ -49,10 +49,10 @@ public class ClientBrainTest {
 	@Test
 	public void nextDecisionMakeTransfer() throws Exception {
 		when(randomness.nextInt(any(Integer.class)))
-				.thenReturn(ClientBrain.MAKE_TRANSFER);
+				.thenReturn(ClientBrain.TRANSFER_MONEY);
 		
 		Decision decision = brain.makeDecision();
-		assertThat(decision, instanceOf(MakeTransferDecision.class));
+		assertThat(decision, instanceOf(TransferMoneyDecision.class));
 	}
 	
 	@Test
