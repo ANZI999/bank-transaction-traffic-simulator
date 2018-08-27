@@ -16,11 +16,12 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
+import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
 
 @RunWith(SpringRunner.class)
 public class WorkingInternetTest {
 	
-	final private static String ADDED_IBAN = "dfsdfsdffdsf";
+	final private static IBAN ADDED_IBAN = new IBAN(1);
 	
 	private WorkingInternet internet = WorkingInternet.getInsatnce();
 	
@@ -45,12 +46,12 @@ public class WorkingInternetTest {
 	
 	@Test
     public void publishIBANSucceedIfIsFirstAccount() throws Exception {		
-		ArrayList<String> noibans = internet.getIBANs();
+		ArrayList<IBAN> noibans = internet.getIBANs();
 		assertEquals(0, noibans.size());
 		
 		internet.publishIBAN(ADDED_IBAN);
 		
-		ArrayList<String> ibans = internet.getIBANs();
+		ArrayList<IBAN> ibans = internet.getIBANs();
 		assertEquals(1, ibans.size());
 		assertTrue(ibans.contains(ADDED_IBAN));
 	}
@@ -59,12 +60,12 @@ public class WorkingInternetTest {
     public void resetClearsCurrentState() throws Exception {		
 		internet.publishIBAN(ADDED_IBAN);
 		
-		ArrayList<String> oneIban = internet.getIBANs();
+		ArrayList<IBAN> oneIban = internet.getIBANs();
 		assertEquals(1, oneIban.size());
 		
 		internet.reset();
 		
-		ArrayList<String> noIbans = internet.getIBANs();
+		ArrayList<IBAN> noIbans = internet.getIBANs();
 		assertEquals(0, noIbans.size());
 	}
 	

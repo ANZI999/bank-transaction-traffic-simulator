@@ -2,19 +2,20 @@ package com.anzisolutions.bankingsimulator.clientbase;
 
 import java.util.ArrayList;
 
+import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
 import com.anzisolutions.bankingsimulator.exception.InsufficientFundsException;
 
 public class ClientFinances {
 	private String taxID;
 	private int cash;
 	private int incomeTotal;
-	private ArrayList<String> ownedIbans;
+	private ArrayList<IBAN> ownedIbans;
 	
 	public ClientFinances(String taxID) {
 		this.taxID = taxID;
 		this.cash = 0;
 		this.incomeTotal = 0;
-		this.ownedIbans = new ArrayList<String>();
+		this.ownedIbans = new ArrayList<IBAN>();
 	}
 
 	public String getTaxID() {
@@ -34,11 +35,11 @@ public class ClientFinances {
 		return incomeTotal;
 	}
 
-	public ArrayList<String> getOwnedIbans() {
+	public ArrayList<IBAN> getOwnedIbans() {
 		return ownedIbans;
 	}
 
-	public void addOwnedIban(String iban) {
+	public void addOwnedIban(IBAN iban) {
 		ownedIbans.add(iban);		
 	}
 

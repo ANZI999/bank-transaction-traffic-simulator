@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.anzisolutions.bankingsimulator.Internet;
 import com.anzisolutions.bankingsimulator.TaxBureau;
 import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
+import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
 import com.anzisolutions.bankingsimulator.clientbase.ClientFinances;
 import com.anzisolutions.bankingsimulator.util.TestHelper;
 
@@ -43,7 +44,7 @@ public class CreateAccountDecisionTest {
 	
 	@Test
 	public void execute() throws Exception {
-		ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+		ArgumentCaptor<IBAN> captor = ArgumentCaptor.forClass(IBAN.class);
 		
 		Bank bank = new TaxBureau().createBank();
 		int bankID = bank.getID();
@@ -55,8 +56,8 @@ public class CreateAccountDecisionTest {
 		decision.execute(internet, finances);
 		verify(internet, times(1)).publishIBAN(captor.capture());
 		verify(finances, times(1)).addOwnedIban(captor.capture());
-		List<String> ibans = captor.getAllValues();
+		List<IBAN> ibans = captor.getAllValues();
 		assertEquals(ibans.get(0), ibans.get(1));
-		TestHelper.assertValidIBAN(ibans.get(0), bankID);
+		TestHelper.assertValidIBAN(ibans.get(0).toString(), bankID);
 	}
 }

@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
 import com.anzisolutions.bankingsimulator.exception.InsufficientFundsException;
 
 @RunWith(SpringRunner.class)
@@ -35,8 +36,8 @@ public class ClientFinancesTest {
 	
 	@Test
     public void addAccount() throws Exception {
-		String firstAccount = "firstAccount";
-		String secondAccount = "secondAccount";
+		IBAN firstAccount = new IBAN(1);
+		IBAN secondAccount = new IBAN(1);
 		
 		assertEquals(0, finances.getOwnedIbans().size());	
 		finances.addOwnedIban(firstAccount);	

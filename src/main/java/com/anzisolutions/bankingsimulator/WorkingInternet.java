@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
+import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
 
 public class WorkingInternet implements Internet {
 	
@@ -16,18 +17,18 @@ public class WorkingInternet implements Internet {
 		return instance;
 	}
 	
-	private ArrayList<String> ibans = new ArrayList<String>();
+	private ArrayList<IBAN> ibans = new ArrayList<IBAN>();
 	private HashMap<String, Bank> banks = new HashMap<String, Bank>();
 	
 	private WorkingInternet() {}
 	
 	@Override
-	public void publishIBAN(String iban) {
+	public void publishIBAN(IBAN iban) {
 		ibans.add(iban);
 	}
 	
 	@Override
-	public ArrayList<String> getIBANs() {
+	public ArrayList<IBAN> getIBANs() {
 		 return ibans;
 	}
 	
@@ -42,6 +43,6 @@ public class WorkingInternet implements Internet {
 	}
 	
 	public void reset() {
-		ibans = new ArrayList<String>();
+		ibans = new ArrayList<IBAN>();
 	}
 }

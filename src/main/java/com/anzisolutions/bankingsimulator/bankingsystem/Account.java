@@ -4,10 +4,10 @@ import com.anzisolutions.bankingsimulator.exception.InsufficientFundsException;
 
 public class Account {
 	private int balance;
-	private String iban;
+	private IBAN iban;
 	private String owner;
 
-	public Account(String iban, String owner) {
+	public Account(IBAN iban, String owner) {
 		this.balance = 0;
 		this.iban = iban;
 		this.owner = owner;
@@ -28,7 +28,7 @@ public class Account {
 		balance -= amount;
 	}
 
-	public String getIBAN() {
+	public IBAN getIBAN() {
 		return iban;
 	}
 

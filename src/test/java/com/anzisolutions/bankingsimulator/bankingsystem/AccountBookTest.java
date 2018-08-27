@@ -21,7 +21,7 @@ public class AccountBookTest {
 		AccountBook accountBook = new AccountBook(BANK_ID);
 		
 		accountBook.addAccount(TEST_USER);
-		ArrayList<String> userAcounts = accountBook.getUserAccounts(TEST_USER);
+		ArrayList<IBAN> userAcounts = accountBook.getUserAccounts(TEST_USER);
 		assertEquals(1, userAcounts.size());
 		
     }
@@ -35,12 +35,12 @@ public class AccountBookTest {
 			accountBook.addAccount(TEST_USER);
 		}
 		
-		ArrayList<String> userAcounts = accountBook.getUserAccounts(TEST_USER);
+		ArrayList<IBAN> userAcounts = accountBook.getUserAccounts(TEST_USER);
 		assertEquals(accountCount, userAcounts.size());
 		
-		Iterator<String> it = userAcounts.iterator();
+		Iterator<IBAN> it = userAcounts.iterator();
 	    while (it.hasNext()) {
-	    	TestHelper.assertValidIBAN(it.next(), BANK_ID);
+	    	TestHelper.assertValidIBAN(it.next().toString(), BANK_ID);
 	    }	
     }
 	
@@ -53,12 +53,12 @@ public class AccountBookTest {
 		
 		accountBook.addAccount(TEST_USER);
 		
-		ArrayList<String> userAcounts = accountBook.getUserAccounts(TEST_USER);
+		ArrayList<IBAN> userAcounts = accountBook.getUserAccounts(TEST_USER);
 		assertEquals(1, userAcounts.size());
 		
-		Iterator<String> it = userAcounts.iterator();
+		Iterator<IBAN> it = userAcounts.iterator();
 	    while (it.hasNext()) {
-	    	TestHelper.assertValidIBAN(it.next(), BANK_ID);
+	    	TestHelper.assertValidIBAN(it.next().toString(), BANK_ID);
 	    }
     }
 	

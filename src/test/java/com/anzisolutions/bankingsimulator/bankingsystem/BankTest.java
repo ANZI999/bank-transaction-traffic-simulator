@@ -39,12 +39,12 @@ public class BankTest {
 
 	@Test
 	public void createAccount() throws Exception {
-		String iban = bank.createAccount(TEST_USER_ONE);
+		IBAN iban = bank.createAccount(TEST_USER_ONE);
 		int bankID = bank.getID();
 
-		TestHelper.assertValidIBAN(iban, bankID);
+		TestHelper.assertValidIBAN(iban.toString(), bankID);
 
-		ArrayList<String> accounts = bank.getUserAccounts(TEST_USER_ONE);
+		ArrayList<IBAN> accounts = bank.getUserAccounts(TEST_USER_ONE);
 		assertEquals(1, accounts.size());
 	}
 
@@ -52,13 +52,13 @@ public class BankTest {
 	public void createThreeAccounts() throws Exception {
 		int accountCount = 3;
 		int bankID = bank.getID();
-		String iban;
+		IBAN iban;
 		for (int i = 0; i < accountCount; i++) {
 			iban = bank.createAccount(TEST_USER_ONE);
-			TestHelper.assertValidIBAN(iban, bankID);
+			TestHelper.assertValidIBAN(iban.toString(), bankID);
 		}
 
-		ArrayList<String> accounts = bank.getUserAccounts(TEST_USER_ONE);
+		ArrayList<IBAN> accounts = bank.getUserAccounts(TEST_USER_ONE);
 		assertEquals(accountCount, accounts.size());
 	}
 
@@ -66,7 +66,7 @@ public class BankTest {
 	public void deposit() throws Exception {
 		int firstDepositAmount = 100000;
 
-		String iban = bank.createAccount(TEST_USER_ONE);
+		IBAN iban = bank.createAccount(TEST_USER_ONE);
 		bank.deposit(TEST_USER_ONE, iban, firstDepositAmount);
 		Account account = bank.logInToAccount(TEST_USER_ONE, iban);
 		assertEquals(firstDepositAmount, account.getBalance());
@@ -83,13 +83,13 @@ public class BankTest {
 	public void depositToAccountNotOwned() throws Exception {
 		int depositAmount = 67800;
 
-		String iban = bank.createAccount(TEST_USER_ONE);
+		IBAN iban = bank.createAccount(TEST_USER_ONE);
 		bank.deposit(TEST_USER_TWO, iban, depositAmount);
 	}
 
 	@Test(expected = LoginFailedException.class)
 	public void logInToAccountNotOwned() throws Exception {
-		String iban = bank.createAccount(TEST_USER_ONE);
+		IBAN iban = bank.createAccount(TEST_USER_ONE);
 		bank.logInToAccount(TEST_USER_TWO, iban);
 	}
 
@@ -98,7 +98,7 @@ public class BankTest {
 		int firstDeposit = 1000;
 		Account account;
 
-		String iban = bank.createAccount(TEST_USER_ONE);
+		IBAN iban = bank.createAccount(TEST_USER_ONE);
 		bank.deposit(TEST_USER_ONE, iban, firstDeposit);
 
 		int firstWithdraw = 200;
@@ -111,7 +111,7 @@ public class BankTest {
 	public void withdrawFromOtherPersonsAccount() throws Exception {
 		int withdraw = 10000;
 
-		String iban = bank.createAccount(TEST_USER_ONE);
+		IBAN iban = bank.createAccount(TEST_USER_ONE);
 		bank.withdraw(TEST_USER_TWO, iban, withdraw);
 	}
 
@@ -119,7 +119,7 @@ public class BankTest {
 	public void withdrawPersonDoesNotHave() throws Exception {
 		int withdraw = 10000;
 
-		String iban = bank.createAccount(TEST_USER_ONE);
+		IBAN iban = bank.createAccount(TEST_USER_ONE);
 		Account account = bank.logInToAccount(TEST_USER_ONE, iban);
 		assertEquals(0, account.getBalance());
 		bank.withdraw(TEST_USER_ONE, iban, withdraw);
@@ -130,8 +130,8 @@ public class BankTest {
 		int deposit = 10000;
 		int transfer = 700;
 
-		String fromIban = bank.createAccount(TEST_USER_ONE);
-		String toIban = bank.createAccount(TEST_USER_TWO);
+		IBAN fromIban = bank.createAccount(TEST_USER_ONE);
+		IBAN toIban = bank.createAccount(TEST_USER_TWO);
 		bank.deposit(TEST_USER_ONE, fromIban, deposit);
 		bank.transfer(TEST_USER_ONE, fromIban, toIban, transfer);
 
@@ -147,8 +147,8 @@ public class BankTest {
 		int deposit = 10000;
 		int transfer = 700;
 
-		String fromIban = bank.createAccount(TEST_USER_ONE);
-		String toIban = bank.createAccount(TEST_USER_TWO);
+		IBAN fromIban = bank.createAccount(TEST_USER_ONE);
+		IBAN toIban = bank.createAccount(TEST_USER_TWO);
 		bank.deposit(TEST_USER_ONE, fromIban, deposit);
 		bank.transfer(TEST_USER_TWO, fromIban, toIban, transfer);
 	}
@@ -164,8 +164,8 @@ public class BankTest {
 		int deposit = 10000;
 		int transfer = 700;
 
-		String fromIban = bank.createAccount(TEST_USER_ONE);
-		String toIban = secondBank.createAccount(TEST_USER_TWO);
+		IBAN fromIban = bank.createAccount(TEST_USER_ONE);
+		IBAN toIban = secondBank.createAccount(TEST_USER_TWO);
 		bank.deposit(TEST_USER_ONE, fromIban, deposit);
 		bank.transfer(TEST_USER_ONE, fromIban, toIban, transfer);
 
@@ -179,7 +179,7 @@ public class BankTest {
 		Bank secondBank = taxBureau.createBank();
 		int transfer = 700;
 
-		String toIban = bank.createAccount(TEST_USER_TWO);
+		IBAN toIban = bank.createAccount(TEST_USER_TWO);
 		bank.transfer(secondBank.getID(), toIban, transfer);
 
 		Account userTwoAccount = bank.logInToAccount(TEST_USER_TWO, toIban);

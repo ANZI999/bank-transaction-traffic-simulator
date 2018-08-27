@@ -17,11 +17,11 @@ public class Bank {
 		this.accountBook = new AccountBook(this.id);
 	}
 
-	public String createAccount(String personID) {
+	public IBAN createAccount(String personID) {
 		return accountBook.addAccount(personID);
 	}
 
-	public ArrayList<String> getUserAccounts(String personID) {
+	public ArrayList<IBAN> getUserAccounts(String personID) {
 		return accountBook.getUserAccounts(personID);
 	}
 
@@ -29,24 +29,24 @@ public class Bank {
 		return this.id;		
 	}
 
-	public void deposit(String personID, String iban, int amount) throws LoginFailedException {
+	public void deposit(String personID, IBAN iban, int amount) throws LoginFailedException {
 		Account account = getAuthentiactedAccount(personID, iban);
 		account.increaseBalance(amount);
 	}
 
-	public Account logInToAccount(String personID, String iban) throws LoginFailedException {
+	public Account logInToAccount(String personID, IBAN iban) throws LoginFailedException {
 		return getAuthentiactedAccount(personID, iban);		
 	}
 
-	public void withdraw(String personID, String iban, int amount) throws LoginFailedException, InsufficientFundsException {
+	public void withdraw(String personID, IBAN iban, int amount) throws LoginFailedException, InsufficientFundsException {
 		Account account = getAuthentiactedAccount(personID, iban);
 		account.decreaseBalance(amount);
 	}
 	
-	public void transfer(String personID, String fromIban, String toIban, int amount) throws InsufficientFundsException, LoginFailedException {
+	public void transfer(String personID, IBAN fromIban, IBAN toIban, int amount) throws InsufficientFundsException, LoginFailedException {
 		Account fromAccount = getAuthentiactedAccount(personID, fromIban);
 		fromAccount.decreaseBalance(amount);
-		int toBankID = Integer.parseInt(toIban.substring(0, AccountBook.IBAN_BANK_LENGTH));
+		int toBankID = toIban.getBankID();
 		if(toBankID == id) {
 			Account toAccount = accountBook.getAccount(toIban);
 			toAccount.increaseBalance(amount);
@@ -56,12 +56,12 @@ public class Bank {
 		}
 	}
 	
-	public void transfer(int bankID, String iban, int amount) {
+	public void transfer(int bankID, IBAN iban, int amount) {
 		Account toAccount = accountBook.getAccount(iban);
 		toAccount.increaseBalance(amount);
 	}
 	
-	private Account getAuthentiactedAccount(String personID, String iban) throws LoginFailedException {
+	private Account getAuthentiactedAccount(String personID, IBAN iban) throws LoginFailedException {
 		Account account = accountBook.getAccount(iban);
 		if (!account.getOwner().equals(personID)) {
 			throw new LoginFailedException();

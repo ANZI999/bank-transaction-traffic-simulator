@@ -9,27 +9,27 @@ public class AccountBook {
 	public static final int IBAN_BANK_LENGTH = 3;
 	
 	private int bankID;
-	private HashMap<String, Account> accounts;
-	private HashMap<String, ArrayList<String>> userIndex;
+	private HashMap<IBAN, Account> accounts;
+	private HashMap<String, ArrayList<IBAN>> userIndex;
 	
 	public AccountBook(int bankID) {
 		this.bankID = bankID;
-		this.accounts = new HashMap<String, Account>();
-		this.userIndex = new HashMap<String, ArrayList<String>>();
+		this.accounts = new HashMap<IBAN, Account>();
+		this.userIndex = new HashMap<String, ArrayList<IBAN>>();
 	}
 	
-	public Account getAccount(String iban) {
+	public Account getAccount(IBAN iban) {
 		return accounts.get(iban);
 	}
 	
-	public String addAccount(String personID) {
-		String iban = generateIBAN();
+	public IBAN addAccount(String personID) {
+		IBAN iban = new IBAN(bankID);
 		Account account = new Account(iban, personID);
 		accounts.put(iban, account);
 		
-		ArrayList<String> userIbans;
+		ArrayList<IBAN> userIbans;
 		if (!userIndex.containsKey(personID)) {
-			userIbans = userIndex.put(personID, new ArrayList<String>());
+			userIbans = userIndex.put(personID, new ArrayList<IBAN>());
 		} 
 		userIbans = userIndex.get(personID);
 		
@@ -38,14 +38,7 @@ public class AccountBook {
 		return iban;
 	}
 
-	public ArrayList<String> getUserAccounts(String personID) {
+	public ArrayList<IBAN> getUserAccounts(String personID) {
 		return userIndex.get(personID);
-	}
-	
-	private String generateIBAN() {		
-		String bankSect = String.format("%0" + IBAN_BANK_LENGTH + "d", bankID);
-		String time = Long.toString(System.currentTimeMillis());
-		String random = String.format("%07d", new SecureRandom().nextInt(10000000));
-		return bankSect + time + random;
 	}
 }

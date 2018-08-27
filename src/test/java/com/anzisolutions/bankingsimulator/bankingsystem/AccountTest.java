@@ -26,7 +26,7 @@ public class AccountTest {
 	
 	@Test
     public void getIBAN() throws Exception {
-		String iban = "ibaniban";
+		IBAN iban = new IBAN(3);
 		Account filledAccount = new Account(iban, "");
 		
 		assertEquals(iban, filledAccount.getIBAN());
@@ -35,7 +35,7 @@ public class AccountTest {
 	@Test
     public void getOwner() throws Exception {
 		String personID = "owner-22";
-		Account filledAccount = new Account("", personID);
+		Account filledAccount = new Account(null, personID);
 		
 		assertEquals(personID, filledAccount.getOwner());
 	}

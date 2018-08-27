@@ -6,6 +6,7 @@ import java.util.Set;
 
 import com.anzisolutions.bankingsimulator.Internet;
 import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
+import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
 import com.anzisolutions.bankingsimulator.clientbase.ClientFinances;
 
 public class CreateAccountDecision implements Decision {
@@ -23,7 +24,7 @@ public class CreateAccountDecision implements Decision {
 		
 		int chosenBankIndex = randomness.nextInt(bankIDs.size());
 		Bank bank = banks.get(bankIDs.toArray()[chosenBankIndex]);
-		String iban = bank.createAccount(finances.getTaxID());
+		IBAN iban = bank.createAccount(finances.getTaxID());
 		finances.addOwnedIban(iban);
 		internet.publishIBAN(iban);
 	}
