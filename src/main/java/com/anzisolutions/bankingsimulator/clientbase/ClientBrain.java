@@ -36,7 +36,7 @@ public class ClientBrain {
             	decision = new WithdrawMoneyDecision();
                 break;
             default:  
-            	decision = new DepositMoneyDecision();
+            	decision = new DepositMoneyDecision(randomness);
         }
         
 		return decision;
