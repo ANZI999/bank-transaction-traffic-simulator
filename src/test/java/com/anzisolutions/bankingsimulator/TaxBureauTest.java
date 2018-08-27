@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
+import com.anzisolutions.bankingsimulator.bankingsystem.BookKeeping;
 import com.anzisolutions.bankingsimulator.client.Finances;
 
 @RunWith(SpringRunner.class)
@@ -49,13 +50,13 @@ public class TaxBureauTest {
 	}
 	
 	@Test
-	public void createBankIDsMustBeUnique() throws Exception {		
+	public void registerBankBookKeepingIDsMustBeUnique() throws Exception {		
 		int bankCount = 3;
 		HashSet<String> ids = new HashSet<String>();
 		
 		for(int i = 0; i < bankCount; i++) {
-			Bank bank = taxBureau.createBank();
-			ids.add(Integer.toString(bank.getID()));
+			BookKeeping bookKeeping = taxBureau.registerBankBookKeeping();
+			ids.add(Integer.toString(bookKeeping.getBankID()));
 		}
 		assertEquals(bankCount, ids.size());
 	}

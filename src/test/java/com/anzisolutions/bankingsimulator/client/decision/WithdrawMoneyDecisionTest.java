@@ -43,9 +43,8 @@ public class WithdrawMoneyDecisionTest {
 		int deposit = 17000;
 		int withdrawPercentage = 43;
 		int withdraw = (int) Math.round(deposit*withdrawPercentage/100.0);
-		int bankID = 1;
 		
-		Bank bank = new Bank(bankID);
+		Bank bank = new Bank(new TaxBureau().registerBankBookKeeping());
 		String personID = finances.getTaxID();
 		IBAN iban = bank.createAccount(personID);
 		finances.addOwnedIban(iban);
@@ -54,7 +53,7 @@ public class WithdrawMoneyDecisionTest {
 		when(randomness.nextInt(any(Integer.class)))
 				.thenReturn(0)
 				.thenReturn(withdrawPercentage);
-		when(internet.getBank(bankID)).thenReturn(bank);
+		when(internet.getBank(bank.getID())).thenReturn(bank);
 		
 		decision.execute(internet, finances);
 		

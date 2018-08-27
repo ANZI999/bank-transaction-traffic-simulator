@@ -44,7 +44,7 @@ public class DepositMoneyDecisionTest {
 		int depositPercentage = 56;
 		int deposit = (int) Math.round(salary*depositPercentage/100.0);
 		
-		Bank bank = new Bank(1);
+		Bank bank = new Bank(new TaxBureau().registerBankBookKeeping());
 		String personID = finances.getTaxID();
 		IBAN iban = bank.createAccount(personID);
 		finances.addOwnedIban(iban);

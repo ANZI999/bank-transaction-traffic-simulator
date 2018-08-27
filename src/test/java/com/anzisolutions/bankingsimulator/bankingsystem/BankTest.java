@@ -6,8 +6,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +31,7 @@ public class BankTest {
 	
 	@Before
 	public void setUp() {
-		bank = taxBureau.createBank();
+		bank = new Bank(taxBureau.registerBankBookKeeping());
 		bank.setInternet(internet);
 	}
 
@@ -155,7 +153,7 @@ public class BankTest {
 
 	@Test
 	public void transferToOtherBank() throws Exception {
-		Bank secondBank = taxBureau.createBank();
+		Bank secondBank = new Bank(taxBureau.registerBankBookKeeping());
 		secondBank.setInternet(internet);
 		when(internet.getBank(secondBank.getID())).thenReturn(secondBank);
 
@@ -174,7 +172,7 @@ public class BankTest {
 
 	@Test
 	public void transferFromAnotherBank() throws Exception {
-		Bank secondBank = taxBureau.createBank();
+		Bank secondBank = new Bank(taxBureau.registerBankBookKeeping());
 		int transfer = 700;
 
 		IBAN toIban = bank.createAccount(TEST_USER_TWO);
@@ -187,7 +185,7 @@ public class BankTest {
 	
 	@Test
 	public void setInternet() throws Exception {
-		Bank newBank = taxBureau.createBank();
+		Bank newBank = new Bank(taxBureau.registerBankBookKeeping());
 		newBank.setInternet(internet);
 		verify(internet, times(1)).publishBank(newBank);
 	}

@@ -77,7 +77,8 @@ public class InternetImplTest {
 		banks = internet.getBanks();
 		assertEquals(0, banks.size());
 		
-		internet.publishBank(taxBureau.createBank());
+		Bank bank = new Bank(taxBureau.registerBankBookKeeping());
+		internet.publishBank(bank);
 		banks = internet.getBanks();
 		assertEquals(1, banks.size());		
 	}

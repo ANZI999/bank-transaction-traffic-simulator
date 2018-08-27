@@ -32,6 +32,7 @@ public class TransferMoneyDecisionTest {
 	@Mock
 	private Random randomness;
 
+	private TaxBureau taxBureau;
 	private Decision decision;
 	private Finances financesOne;
 	private Finances financesTwo;
@@ -47,16 +48,14 @@ public class TransferMoneyDecisionTest {
 	@Before
 	public void setUp() {
 		decision = new TransferMoneyDecision(randomness);
+		taxBureau = new TaxBureau();
 		
-		int bankIDOne = 1;
-		int bankIDTwo = 2;
-		
-		bankOne = new Bank(bankIDOne);
+		bankOne = new Bank(taxBureau.registerBankBookKeeping());
 		bankOne.setInternet(internet);
-		bankTwo = new Bank(bankIDTwo);
+		bankTwo = new Bank(taxBureau.registerBankBookKeeping());
 		banks = new HashMap<String, Bank>();
-		banks.put(Integer.toString(bankIDOne), bankOne);
-		banks.put(Integer.toString(bankIDTwo), bankTwo);
+		banks.put(Integer.toString(bankOne.getID()), bankOne);
+		banks.put(Integer.toString(bankTwo.getID()), bankTwo);
 		
 		financesOne = new TaxBureau().registerClient();
 		financesTwo = new TaxBureau().registerClient();

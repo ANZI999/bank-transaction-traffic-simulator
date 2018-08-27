@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
+import com.anzisolutions.bankingsimulator.bankingsystem.BookKeeping;
 import com.anzisolutions.bankingsimulator.client.Finances;
 
 public class TaxBureau {
@@ -28,9 +29,8 @@ public class TaxBureau {
 				.mapToInt(Integer::intValue).sum();
 	}
 
-	public Bank createBank() {
-		Bank bank = new Bank(++bankCount);
-		return bank;
+	public BookKeeping registerBankBookKeeping() {
+		return new BookKeeping(++bankCount);
 	}
 
 }

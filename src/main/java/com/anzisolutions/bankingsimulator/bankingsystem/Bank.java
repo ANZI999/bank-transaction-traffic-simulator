@@ -10,19 +10,19 @@ public class Bank {
 	
 	private int id; 
 	private Internet internet;
-	private AccountBook accountBook;
+	private BookKeeping bookKeeping;
 	
-	public Bank(int id) {
-		this.id = id;
-		this.accountBook = new AccountBook(this.id);
+	public Bank(BookKeeping bookKeeping) {
+		this.bookKeeping = bookKeeping;
+		this.id = bookKeeping.getBankID();
 	}
 
 	public IBAN createAccount(String personID) {
-		return accountBook.addAccount(personID);
+		return bookKeeping.addAccount(personID);
 	}
 
 	public ArrayList<IBAN> getUserAccounts(String personID) {
-		return accountBook.getUserAccounts(personID);
+		return bookKeeping.getUserAccounts(personID);
 	}
 
 	public int getID() {
@@ -48,7 +48,7 @@ public class Bank {
 		fromAccount.decreaseBalance(amount);
 		int toBankID = toIban.getBankID();
 		if(toBankID == id) {
-			Account toAccount = accountBook.getAccount(toIban);
+			Account toAccount = bookKeeping.getAccount(toIban);
 			toAccount.increaseBalance(amount);
 		} else {
 			Bank toBank = internet.getBank(toBankID);
@@ -57,12 +57,12 @@ public class Bank {
 	}
 	
 	public void transfer(int bankID, IBAN iban, int amount) {
-		Account toAccount = accountBook.getAccount(iban);
+		Account toAccount = bookKeeping.getAccount(iban);
 		toAccount.increaseBalance(amount);
 	}
 	
 	private Account getAuthentiactedAccount(String personID, IBAN iban) throws LoginFailedException {
-		Account account = accountBook.getAccount(iban);
+		Account account = bookKeeping.getAccount(iban);
 		if (!account.getOwner().equals(personID)) {
 			throw new LoginFailedException();
 		}		

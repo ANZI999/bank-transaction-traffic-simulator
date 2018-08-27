@@ -48,7 +48,7 @@ public class CreateAccountDecisionTest {
 	public void execute() throws Exception {
 		ArgumentCaptor<IBAN> captor = ArgumentCaptor.forClass(IBAN.class);
 		
-		Bank bank = new TaxBureau().createBank();
+		Bank bank = new Bank(new TaxBureau().registerBankBookKeeping());
 		int bankID = bank.getID();
 		HashMap<String, Bank> banks = new HashMap<String, Bank>();
 		banks.put(Integer.toString(bank.getID()), bank);

@@ -3,13 +3,13 @@ package com.anzisolutions.bankingsimulator.bankingsystem;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class AccountBook {
+public class BookKeeping {
 	
 	private int bankID;
 	private HashMap<IBAN, Account> accounts;
 	private HashMap<String, ArrayList<IBAN>> userIndex;
 	
-	public AccountBook(int bankID) {
+	public BookKeeping(int bankID) {
 		this.bankID = bankID;
 		this.accounts = new HashMap<IBAN, Account>();
 		this.userIndex = new HashMap<String, ArrayList<IBAN>>();
@@ -37,5 +37,9 @@ public class AccountBook {
 
 	public ArrayList<IBAN> getUserAccounts(String personID) {
 		return userIndex.get(personID);
+	}
+
+	public int getBankID() {
+		return bankID;
 	}
 }
