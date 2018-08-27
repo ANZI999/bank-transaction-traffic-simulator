@@ -1,4 +1,4 @@
-package com.anzisolutions.bankingsimulator.clientbase.decision;
+package com.anzisolutions.bankingsimulator.client.decision;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
@@ -20,14 +20,16 @@ import com.anzisolutions.bankingsimulator.Internet;
 import com.anzisolutions.bankingsimulator.TaxBureau;
 import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
 import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
-import com.anzisolutions.bankingsimulator.clientbase.ClientFinances;
+import com.anzisolutions.bankingsimulator.client.Finances;
+import com.anzisolutions.bankingsimulator.client.decision.CreateAccountDecision;
+import com.anzisolutions.bankingsimulator.client.decision.Decision;
 import com.anzisolutions.bankingsimulator.util.TestHelper;
 
 @RunWith(SpringRunner.class)
 public class CreateAccountDecisionTest {
 	
 	@Mock
-	private ClientFinances finances;
+	private Finances finances;
 	
 	@Mock
 	private Internet internet;

@@ -1,17 +1,17 @@
-package com.anzisolutions.bankingsimulator.clientbase;
+package com.anzisolutions.bankingsimulator.client;
 
 import java.util.ArrayList;
 
 import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
 import com.anzisolutions.bankingsimulator.exception.InsufficientFundsException;
 
-public class ClientFinances {
+public class Finances {
 	private String taxID;
 	private int cash;
 	private int incomeTotal;
 	private ArrayList<IBAN> ownedIbans;
 	
-	public ClientFinances(String taxID) {
+	public Finances(String taxID) {
 		this.taxID = taxID;
 		this.cash = 0;
 		this.incomeTotal = 0;

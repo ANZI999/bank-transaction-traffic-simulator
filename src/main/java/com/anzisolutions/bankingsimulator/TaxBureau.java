@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
-import com.anzisolutions.bankingsimulator.clientbase.ClientFinances;
+import com.anzisolutions.bankingsimulator.client.Finances;
 
 public class TaxBureau {
 	private static int bankCount = 0;
@@ -13,11 +13,11 @@ public class TaxBureau {
 		return ++bankCount;
 	}
 	
-	private ArrayList<ClientFinances> people = new ArrayList<ClientFinances>();
+	private ArrayList<Finances> people = new ArrayList<Finances>();
 
-	public ClientFinances registerClient() {
+	public Finances registerClient() {
 		String taxID = UUID.randomUUID().toString();
-		ClientFinances clientFinances = new ClientFinances(taxID);
+		Finances clientFinances = new Finances(taxID);
 		people.add(clientFinances);
 		return clientFinances;
 	}

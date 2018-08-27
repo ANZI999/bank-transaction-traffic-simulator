@@ -1,4 +1,4 @@
-package com.anzisolutions.bankingsimulator.clientbase.decision;
+package com.anzisolutions.bankingsimulator.client.decision;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -6,7 +6,7 @@ import java.util.Random;
 import com.anzisolutions.bankingsimulator.Internet;
 import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
 import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
-import com.anzisolutions.bankingsimulator.clientbase.ClientFinances;
+import com.anzisolutions.bankingsimulator.client.Finances;
 import com.anzisolutions.bankingsimulator.exception.InsufficientFundsException;
 import com.anzisolutions.bankingsimulator.exception.LoginFailedException;
 
@@ -19,7 +19,7 @@ public class DepositMoneyDecision implements Decision {
 	}
 	
 	@Override
-	public void execute(Internet internet, ClientFinances finances) {		
+	public void execute(Internet internet, Finances finances) {		
 		try {
 			int depositPercentage = randomness.nextInt(100);
 			int deposit = (int) Math.round(finances.getCash()*depositPercentage/100.0);

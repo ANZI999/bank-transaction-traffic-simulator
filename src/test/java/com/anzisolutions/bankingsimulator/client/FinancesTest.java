@@ -1,4 +1,4 @@
-package com.anzisolutions.bankingsimulator.clientbase;
+package com.anzisolutions.bankingsimulator.client;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,13 +8,14 @@ import org.mockito.InjectMocks;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
+import com.anzisolutions.bankingsimulator.client.Finances;
 import com.anzisolutions.bankingsimulator.exception.InsufficientFundsException;
 
 @RunWith(SpringRunner.class)
-public class ClientFinancesTest {
+public class FinancesTest {
 	
 	@InjectMocks
-	private ClientFinances finances;
+	private Finances finances;
 	
 	@Test
     public void payday() throws Exception {

@@ -1,15 +1,15 @@
-package com.anzisolutions.bankingsimulator.clientbase;
+package com.anzisolutions.bankingsimulator.client;
 
 import java.util.Random;
 
-import com.anzisolutions.bankingsimulator.clientbase.decision.CreateAccountDecision;
-import com.anzisolutions.bankingsimulator.clientbase.decision.Decision;
-import com.anzisolutions.bankingsimulator.clientbase.decision.DepositMoneyDecision;
-import com.anzisolutions.bankingsimulator.clientbase.decision.GoToSleepDecision;
-import com.anzisolutions.bankingsimulator.clientbase.decision.TransferMoneyDecision;
-import com.anzisolutions.bankingsimulator.clientbase.decision.WithdrawMoneyDecision;
+import com.anzisolutions.bankingsimulator.client.decision.CreateAccountDecision;
+import com.anzisolutions.bankingsimulator.client.decision.Decision;
+import com.anzisolutions.bankingsimulator.client.decision.DepositMoneyDecision;
+import com.anzisolutions.bankingsimulator.client.decision.GoToSleepDecision;
+import com.anzisolutions.bankingsimulator.client.decision.TransferMoneyDecision;
+import com.anzisolutions.bankingsimulator.client.decision.WithdrawMoneyDecision;
 
-public class ClientBrain {
+public class Brain {
 	public static final int CREATE_ACCOUNT = 0;
 	public static final int GO_TO_SLEEP = 1;
 	public static final int TRANSFER_MONEY = 2;

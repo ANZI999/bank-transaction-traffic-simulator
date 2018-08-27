@@ -1,4 +1,4 @@
-package com.anzisolutions.bankingsimulator.clientbase.decision;
+package com.anzisolutions.bankingsimulator.client.decision;
 
 import static org.mockito.Mockito.when;
 
@@ -11,13 +11,15 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.anzisolutions.bankingsimulator.Internet;
-import com.anzisolutions.bankingsimulator.clientbase.ClientFinances;
+import com.anzisolutions.bankingsimulator.client.Finances;
+import com.anzisolutions.bankingsimulator.client.decision.Decision;
+import com.anzisolutions.bankingsimulator.client.decision.GoToSleepDecision;
 
 @RunWith(SpringRunner.class)
 public class GoToSleepDecisionTest {
 	
 	@Mock
-	private ClientFinances finances;
+	private Finances finances;
 	
 	@Mock
 	private Internet internet;

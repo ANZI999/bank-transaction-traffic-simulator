@@ -10,7 +10,7 @@ import org.mockito.InjectMocks;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
-import com.anzisolutions.bankingsimulator.clientbase.ClientFinances;
+import com.anzisolutions.bankingsimulator.client.Finances;
 
 @RunWith(SpringRunner.class)
 public class TaxBureauTest {
@@ -24,7 +24,7 @@ public class TaxBureauTest {
 		int clientCount = 5;
 	
 		String taxID;
-		ClientFinances finances;
+		Finances finances;
 		for(int i = 0; i < clientCount; i++) {
 			finances = taxBureau.registerClient();
 			taxID = finances.getTaxID();
@@ -42,7 +42,7 @@ public class TaxBureauTest {
 		
 		assertEquals(0, taxBureau.getTotalSalaryFund());
 		for(int i = 0; i < clientCount; i++) {
-			ClientFinances finances = taxBureau.registerClient();
+			Finances finances = taxBureau.registerClient();
 			finances.payday(individualSalry);
 		}
 		assertEquals(clientCount*individualSalry, taxBureau.getTotalSalaryFund());

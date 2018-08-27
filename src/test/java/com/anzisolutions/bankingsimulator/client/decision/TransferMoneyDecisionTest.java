@@ -1,4 +1,4 @@
-package com.anzisolutions.bankingsimulator.clientbase.decision;
+package com.anzisolutions.bankingsimulator.client.decision;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -19,7 +19,9 @@ import com.anzisolutions.bankingsimulator.TaxBureau;
 import com.anzisolutions.bankingsimulator.bankingsystem.Account;
 import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
 import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
-import com.anzisolutions.bankingsimulator.clientbase.ClientFinances;
+import com.anzisolutions.bankingsimulator.client.Finances;
+import com.anzisolutions.bankingsimulator.client.decision.Decision;
+import com.anzisolutions.bankingsimulator.client.decision.TransferMoneyDecision;
 
 @RunWith(SpringRunner.class)
 public class TransferMoneyDecisionTest {
@@ -31,8 +33,8 @@ public class TransferMoneyDecisionTest {
 	private Random randomness;
 
 	private Decision decision;
-	private ClientFinances financesOne;
-	private ClientFinances financesTwo;
+	private Finances financesOne;
+	private Finances financesTwo;
 	private IBAN ibanOne;
 	private IBAN ibanTwo;
 	private HashMap<String, Bank> banks;

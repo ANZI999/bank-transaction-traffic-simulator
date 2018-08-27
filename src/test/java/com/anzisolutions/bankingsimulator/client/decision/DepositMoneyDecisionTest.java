@@ -1,4 +1,4 @@
-package com.anzisolutions.bankingsimulator.clientbase.decision;
+package com.anzisolutions.bankingsimulator.client.decision;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -16,10 +16,12 @@ import com.anzisolutions.bankingsimulator.Internet;
 import com.anzisolutions.bankingsimulator.TaxBureau;
 import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
 import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
-import com.anzisolutions.bankingsimulator.clientbase.ClientFinances;
+import com.anzisolutions.bankingsimulator.client.Finances;
+import com.anzisolutions.bankingsimulator.client.decision.Decision;
+import com.anzisolutions.bankingsimulator.client.decision.DepositMoneyDecision;
 
 @RunWith(SpringRunner.class)
-public class WithdrawMoneyDecisionTest {
+public class DepositMoneyDecisionTest {
 	
 	@Mock
 	private Internet internet;
@@ -28,37 +30,36 @@ public class WithdrawMoneyDecisionTest {
 	private Random randomness;
 
 	private Decision decision;
-	private ClientFinances finances;
+	private Finances finances;
 	
 	@Before
 	public void setUp() {
-		decision = new WithdrawMoneyDecision(randomness);
+		decision = new DepositMoneyDecision(randomness);
 		finances = new TaxBureau().registerClient();
 	}
 	
 	@Test
 	public void execute() throws Exception {
-		int deposit = 17000;
-		int withdrawPercentage = 43;
-		int withdraw = (int) Math.round(deposit*withdrawPercentage/100.0);
-		int bankID = 1;
+		int salary = 23000;
+		int depositPercentage = 56;
+		int deposit = (int) Math.round(salary*depositPercentage/100.0);
 		
-		Bank bank = new Bank(bankID);
+		Bank bank = new Bank(1);
 		String personID = finances.getTaxID();
 		IBAN iban = bank.createAccount(personID);
 		finances.addOwnedIban(iban);
-		bank.deposit(finances.getTaxID(), iban, deposit);
+		int bankID = bank.getID();
 		
 		when(randomness.nextInt(any(Integer.class)))
-				.thenReturn(0)
-				.thenReturn(withdrawPercentage);
+				.thenReturn(depositPercentage)
+				.thenReturn(0);
 		when(internet.getBank(bankID)).thenReturn(bank);
 		
+		finances.payday(salary);
 		decision.execute(internet, finances);
 		
-		assertEquals(withdraw, finances.getCash());
-		assertEquals(0, finances.getIncomeTotal());
-		assertEquals(deposit - withdraw, bank.logInToAccount(personID, iban).getBalance());
+		assertEquals(salary - deposit, finances.getCash());
+		assertEquals(deposit, bank.logInToAccount(personID, iban).getBalance());
 	}
 
 }

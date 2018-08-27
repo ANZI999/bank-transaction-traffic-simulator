@@ -1,4 +1,4 @@
-package com.anzisolutions.bankingsimulator.clientbase.decision;
+package com.anzisolutions.bankingsimulator.client.decision;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -7,7 +7,7 @@ import java.util.Set;
 import com.anzisolutions.bankingsimulator.Internet;
 import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
 import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
-import com.anzisolutions.bankingsimulator.clientbase.ClientFinances;
+import com.anzisolutions.bankingsimulator.client.Finances;
 
 public class CreateAccountDecision implements Decision {
 
@@ -18,7 +18,7 @@ public class CreateAccountDecision implements Decision {
 	}
 	
 	@Override
-	public void execute(Internet internet, ClientFinances finances) {
+	public void execute(Internet internet, Finances finances) {
 		HashMap<String, Bank> banks = internet.getBanks();
 		Set<String> bankIDs = banks.keySet();
 		
