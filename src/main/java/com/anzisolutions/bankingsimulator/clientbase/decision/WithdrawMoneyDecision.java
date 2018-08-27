@@ -26,7 +26,7 @@ public class WithdrawMoneyDecision implements Decision {
 			
 			int chosenIbanIndex = randomness.nextInt(myIbans.size());
 			IBAN chosenIban = myIbans.get(chosenIbanIndex);
-			Bank bank = internet.getBanks().get(Integer.toString(chosenIban.getBankID()));
+			Bank bank = internet.getBank(chosenIban.getBankID());
 			Account account = bank.logInToAccount(finances.getTaxID(), chosenIban);
 			
 			int withdrawPercentage = randomness.nextInt(100);

@@ -27,15 +27,15 @@ import com.anzisolutions.bankingsimulator.util.TestHelper;
 public class CreateAccountDecisionTest {
 	
 	@Mock
-	ClientFinances finances;
+	private ClientFinances finances;
 	
 	@Mock
-	Internet internet;
+	private Internet internet;
 	
 	@Mock
-	Random randomness;
+	private Random randomness;
 
-	Decision decision;
+	private Decision decision;
 	
 	@Before
 	public void setUp() {

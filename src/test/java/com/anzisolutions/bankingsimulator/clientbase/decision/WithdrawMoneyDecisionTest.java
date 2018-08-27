@@ -1,10 +1,9 @@
 package com.anzisolutions.bankingsimulator.clientbase.decision;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
 
-import java.util.HashMap;
 import java.util.Random;
 
 import org.junit.Before;
@@ -22,15 +21,14 @@ import com.anzisolutions.bankingsimulator.clientbase.ClientFinances;
 @RunWith(SpringRunner.class)
 public class WithdrawMoneyDecisionTest {
 	
-	ClientFinances finances;
+	@Mock
+	private Internet internet;
 	
 	@Mock
-	Internet internet;
-	
-	@Mock
-	Random randomness;
+	private Random randomness;
 
-	Decision decision;
+	private Decision decision;
+	private ClientFinances finances;
 	
 	@Before
 	public void setUp() {
@@ -51,13 +49,10 @@ public class WithdrawMoneyDecisionTest {
 		finances.addOwnedIban(iban);
 		bank.deposit(finances.getTaxID(), iban, deposit);
 		
-		HashMap<String, Bank> banks = new HashMap<String, Bank>();
-		banks.put(Integer.toString(bankID), bank);
-		
 		when(randomness.nextInt(any(Integer.class)))
 				.thenReturn(0)
 				.thenReturn(withdrawPercentage);
-		when(internet.getBanks()).thenReturn(banks);
+		when(internet.getBank(bankID)).thenReturn(bank);
 		
 		decision.execute(internet, finances);
 		

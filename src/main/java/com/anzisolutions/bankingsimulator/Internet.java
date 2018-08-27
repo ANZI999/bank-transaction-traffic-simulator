@@ -15,4 +15,6 @@ public interface Internet {
 	void publishBank(Bank bank);
 
 	HashMap<String, Bank> getBanks();
+
+	Bank getBank(int bankID);
 }

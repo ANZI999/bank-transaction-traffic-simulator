@@ -157,9 +157,7 @@ public class BankTest {
 	public void transferToOtherBank() throws Exception {
 		Bank secondBank = taxBureau.createBank();
 		secondBank.setInternet(internet);
-		HashMap<String, Bank> banks = new HashMap<String, Bank>();
-		banks.put(Integer.toString(secondBank.getID()), secondBank);
-		when(internet.getBanks()).thenReturn(banks);
+		when(internet.getBank(secondBank.getID())).thenReturn(secondBank);
 
 		int deposit = 10000;
 		int transfer = 700;

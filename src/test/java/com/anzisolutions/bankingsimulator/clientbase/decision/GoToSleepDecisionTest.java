@@ -17,15 +17,15 @@ import com.anzisolutions.bankingsimulator.clientbase.ClientFinances;
 public class GoToSleepDecisionTest {
 	
 	@Mock
-	ClientFinances finances;
+	private ClientFinances finances;
 	
 	@Mock
-	Internet internet;
+	private Internet internet;
 	
 	@Mock
-	Random randomness;
+	private Random randomness;
 
-	Decision decision;
+	private Decision decision;
 	
 	@Before
 	public void setUp() {

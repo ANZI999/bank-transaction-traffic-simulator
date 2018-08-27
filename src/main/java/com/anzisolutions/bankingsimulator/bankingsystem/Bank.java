@@ -51,7 +51,7 @@ public class Bank {
 			Account toAccount = accountBook.getAccount(toIban);
 			toAccount.increaseBalance(amount);
 		} else {
-			Bank toBank = internet.getBanks().get(Integer.toString(toBankID));
+			Bank toBank = internet.getBank(toBankID);
 			toBank.transfer(id, toIban, amount);
 		}
 	}

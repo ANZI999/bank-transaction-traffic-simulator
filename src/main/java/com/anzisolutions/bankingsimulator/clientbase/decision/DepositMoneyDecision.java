@@ -28,7 +28,7 @@ public class DepositMoneyDecision implements Decision {
 			
 			int chosenIbanIndex = randomness.nextInt(myIbans.size());
 			IBAN chosenIban = myIbans.get(chosenIbanIndex);
-			Bank bank = internet.getBanks().get(Integer.toString(chosenIban.getBankID()));
+			Bank bank = internet.getBank(chosenIban.getBankID());
 			
 			finances.spendCash(deposit);
 			bank.deposit(finances.getTaxID(), chosenIban, deposit);
