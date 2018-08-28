@@ -23,7 +23,7 @@ public class BankingSystemTest {
 	private Internet internet;
 
 	@Test
-	public void create() throws Exception {
+	public void start() throws Exception {
 		int bankCount = 5;
 		when(taxBureau.registerBankBookKeeping()).thenReturn(new BookKeeping(1));
 		
