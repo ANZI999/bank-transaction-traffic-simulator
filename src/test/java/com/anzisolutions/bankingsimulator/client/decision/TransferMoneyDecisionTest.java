@@ -2,6 +2,9 @@ package com.anzisolutions.bankingsimulator.client.decision;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -20,8 +23,6 @@ import com.anzisolutions.bankingsimulator.bankingsystem.Account;
 import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
 import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
 import com.anzisolutions.bankingsimulator.client.Finances;
-import com.anzisolutions.bankingsimulator.client.decision.Decision;
-import com.anzisolutions.bankingsimulator.client.decision.TransferMoneyDecision;
 
 @RunWith(SpringRunner.class)
 public class TransferMoneyDecisionTest {
@@ -92,6 +93,39 @@ public class TransferMoneyDecisionTest {
 		assertEquals(deposit - transfer, accountOne.getBalance());
 		Account accountTwo = bankTwo.logInToAccount(financesTwo.getTaxID(), ibanTwo);
 		assertEquals(transfer, accountTwo.getBalance());
+	}
+	
+	@Test
+	public void executeTransferToSameAccount() throws Exception {
+		int deposit = 17000;
+		int transferPercentage = 76;
+		
+		Bank spy = spy(bankOne);
+		
+		bankOne.deposit(financesOne.getTaxID(), ibanOne, deposit);
+		
+		when(randomness.nextInt(any(Integer.class)))
+				.thenReturn(0)
+				.thenReturn(transferPercentage)
+				.thenReturn(0);
+		when(internet.getBank(spy.getID())).thenReturn(spy);
+		when(internet.getIBANs()).thenReturn(ibans);
+		
+		decision.execute(internet, financesOne);
+		
+		verify(spy, never()).transfer(
+			any(String.class), 
+			any(IBAN.class), 
+			any(IBAN.class), 
+			any(Integer.class)
+		);
+	}
+	
+	@Test
+	public void executeTransferWithoutAccount() throws Exception {
+		Finances financesThree = new TaxBureau().registerClient();;
+		
+		decision.execute(internet, financesThree);
 	}
 
 }

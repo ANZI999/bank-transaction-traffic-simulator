@@ -10,6 +10,8 @@ import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
 import com.anzisolutions.bankingsimulator.client.Finances;
 import com.anzisolutions.bankingsimulator.exception.InsufficientFundsException;
 import com.anzisolutions.bankingsimulator.exception.LoginFailedException;
+import com.anzisolutions.bankingsimulator.exception.NoOwnedAccountsException;
+import com.anzisolutions.bankingsimulator.exception.ZeroValueTransactionException;
 
 public class TransferMoneyDecision implements Decision {
 	
@@ -24,6 +26,10 @@ public class TransferMoneyDecision implements Decision {
 		try {
 			ArrayList<IBAN> myIbans = finances.getOwnedIbans();
 			
+			if(myIbans.isEmpty()) {
+				throw new NoOwnedAccountsException();
+			}
+			
 			int chosenFromIbanIndex = randomness.nextInt(myIbans.size());
 			IBAN chosenFromIban = myIbans.get(chosenFromIbanIndex);
 			Bank bank = internet.getBank(chosenFromIban.getBankID());
@@ -37,9 +43,14 @@ public class TransferMoneyDecision implements Decision {
 			int chosenToIbanIndex = randomness.nextInt(ibans.size());
 			IBAN chosenToIban = ibans.get(chosenToIbanIndex);
 			
-			bank.transfer(finances.getTaxID(), chosenFromIban, chosenToIban, transfer);
-		} catch (LoginFailedException | InsufficientFundsException e) {
+			if(chosenFromIban.equals(chosenToIban)) {
+				throw new ZeroValueTransactionException();
+			}
 			
+			bank.transfer(finances.getTaxID(), chosenFromIban, chosenToIban, transfer);
+		} catch (LoginFailedException | InsufficientFundsException 
+					| ZeroValueTransactionException 
+					| NoOwnedAccountsException e) {	
 		}
 	}
 
