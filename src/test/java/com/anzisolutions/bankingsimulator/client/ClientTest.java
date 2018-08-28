@@ -1,5 +1,7 @@
 package com.anzisolutions.bankingsimulator.client;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -71,5 +73,15 @@ public class ClientTest {
 	    for(int i = 0; i < decisions.size(); i++) {
 	    	verify(decisions.get(i), times(1)).execute(internet, finances);
 	    }
+	}
+	
+	@Test
+	public void isInitialized() throws Exception {
+		Client clientTwo = new Client(brain);
+		assertFalse(clientTwo.isInitialized());
+		clientTwo.setFinances(finances);
+		assertFalse(clientTwo.isInitialized());
+		clientTwo.setInternet(internet);
+		assertTrue(clientTwo.isInitialized());
 	}
 }

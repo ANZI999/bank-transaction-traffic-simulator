@@ -37,4 +37,8 @@ public class Client implements Runnable {
 		}
 	}
 
+	public boolean isInitialized() {
+		return (internet != null && finances != null);
+	}
+
 }

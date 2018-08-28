@@ -11,7 +11,7 @@ public class Simulator {
 		Internet internet = InternetImpl.getInsatnce();
 		
 		EndSimulationImpl endSimulation = new EndSimulationImpl();
-		Population population = new Population(taxBureau);
+		Population population = new Population(taxBureau, internet);
 		ClientBase clientBase = new ClientBase(population, endSimulation);
 	
 		BankingSystem bankSystem = new BankingSystem(taxBureau, internet);
