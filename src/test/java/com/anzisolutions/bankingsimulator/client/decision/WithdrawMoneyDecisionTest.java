@@ -3,6 +3,9 @@ package com.anzisolutions.bankingsimulator.client.decision;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 import java.util.Random;
 
@@ -14,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.anzisolutions.bankingsimulator.Internet;
 import com.anzisolutions.bankingsimulator.TaxBureau;
+import com.anzisolutions.bankingsimulator.bankingsystem.Account;
 import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
 import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
 import com.anzisolutions.bankingsimulator.client.Finances;
@@ -61,5 +65,37 @@ public class WithdrawMoneyDecisionTest {
 		assertEquals(0, finances.getIncomeTotal());
 		assertEquals(deposit - withdraw, bank.logInToAccount(personID, iban).getBalance());
 	}
+	
+	@Test
+	public void executeWithNoMoney() throws Exception {
+		String taxID = finances.getTaxID();
+		int bankID = 1;
+		int withdrawPercentage = 43;
+		
+		Bank bank = mock(Bank.class);
+		IBAN iban = new IBAN(bankID);
+		Account account = new Account(iban, taxID);
+		finances.addOwnedIban(iban);
+		
+		when(randomness.nextInt(any(Integer.class)))
+				.thenReturn(0)
+				.thenReturn(withdrawPercentage);
+		when(internet.getBank(iban.getBankID())).thenReturn(bank);
+		when(bank.logInToAccount(taxID, iban))
+				.thenReturn(account);
+		
+		decision.execute(internet, finances);
+		verify(bank, never()).withdraw(taxID, iban, 0);
+	}
+	
+	@Test
+	public void executeWithNoAccount() throws Exception {
+		Bank bank = new Bank(new TaxBureau().registerBankBookKeeping());
+		
+		when(internet.getBank(bank.getID())).thenReturn(bank);
+		
+		decision.execute(internet, finances);
+	}
+
 
 }
