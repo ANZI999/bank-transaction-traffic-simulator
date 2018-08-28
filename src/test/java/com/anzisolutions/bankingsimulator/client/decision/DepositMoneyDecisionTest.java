@@ -23,6 +23,9 @@ import com.anzisolutions.bankingsimulator.client.decision.DepositMoneyDecision;
 @RunWith(SpringRunner.class)
 public class DepositMoneyDecisionTest {
 	
+	private static final int DEPOSIT_PERCENTAGE = 56;
+	private static final int SALARY = 23000;
+	
 	@Mock
 	private Internet internet;
 	
@@ -40,9 +43,7 @@ public class DepositMoneyDecisionTest {
 	
 	@Test
 	public void execute() throws Exception {
-		int salary = 23000;
-		int depositPercentage = 56;
-		int deposit = (int) Math.round(salary*depositPercentage/100.0);
+		int deposit = (int) Math.round(SALARY*DEPOSIT_PERCENTAGE/100.0);
 		
 		Bank bank = new Bank(new TaxBureau().registerBankBookKeeping());
 		String personID = finances.getTaxID();
@@ -51,15 +52,34 @@ public class DepositMoneyDecisionTest {
 		int bankID = bank.getID();
 		
 		when(randomness.nextInt(any(Integer.class)))
-				.thenReturn(depositPercentage)
+				.thenReturn(DEPOSIT_PERCENTAGE)
 				.thenReturn(0);
 		when(internet.getBank(bankID)).thenReturn(bank);
 		
-		finances.payday(salary);
+		finances.payday(SALARY);
 		decision.execute(internet, finances);
 		
-		assertEquals(salary - deposit, finances.getCash());
+		assertEquals(SALARY - deposit, finances.getCash());
 		assertEquals(deposit, bank.logInToAccount(personID, iban).getBalance());
+	}
+	
+	@Test
+	public void executeWithNoCash() throws Exception {
+		Finances financesTwo = new TaxBureau().registerClient();		
+		when(randomness.nextInt(any(Integer.class)))
+				.thenReturn(DEPOSIT_PERCENTAGE);
+		
+		decision.execute(internet, financesTwo);
+	}
+	
+	@Test
+	public void executeWithNoAccounts() throws Exception {
+		Finances financesTwo = new TaxBureau().registerClient();
+		financesTwo.payday(SALARY);
+		when(randomness.nextInt(any(Integer.class)))
+				.thenReturn(DEPOSIT_PERCENTAGE);
+		
+		decision.execute(internet, financesTwo);
 	}
 
 }

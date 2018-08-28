@@ -9,6 +9,8 @@ import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
 import com.anzisolutions.bankingsimulator.client.Finances;
 import com.anzisolutions.bankingsimulator.exception.InsufficientFundsException;
 import com.anzisolutions.bankingsimulator.exception.LoginFailedException;
+import com.anzisolutions.bankingsimulator.exception.NoOwnedAccountsException;
+import com.anzisolutions.bankingsimulator.exception.ZeroValueTransactionException;
 
 public class DepositMoneyDecision implements Decision {
 
@@ -24,7 +26,15 @@ public class DepositMoneyDecision implements Decision {
 			int depositPercentage = randomness.nextInt(100);
 			int deposit = (int) Math.round(finances.getCash()*depositPercentage/100.0);
 			
+			if(deposit == 0) {
+				throw new ZeroValueTransactionException();
+			}
+			
 			ArrayList<IBAN> myIbans = finances.getOwnedIbans();
+			
+			if(myIbans.isEmpty()) {
+				throw new NoOwnedAccountsException();
+			}
 			
 			int chosenIbanIndex = randomness.nextInt(myIbans.size());
 			IBAN chosenIban = myIbans.get(chosenIbanIndex);
@@ -32,8 +42,9 @@ public class DepositMoneyDecision implements Decision {
 			
 			finances.spendCash(deposit);
 			bank.deposit(finances.getTaxID(), chosenIban, deposit);
-		} catch (InsufficientFundsException | LoginFailedException e) {
-			
+		} catch (InsufficientFundsException | LoginFailedException 
+				| ZeroValueTransactionException 
+				| NoOwnedAccountsException e) {
 		}
 	}
 
