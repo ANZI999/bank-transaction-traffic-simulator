@@ -11,8 +11,12 @@ public class Brain {
 	
 	private Random randomness;
 
+	public Brain(Random randomness) {
+		this.randomness = randomness;
+	}
+
 	public Decision makeDecision() {
-		int nextDecision = randomness.nextInt(3);
+		int nextDecision = randomness.nextInt(5);
 		
 		Decision decision;
         switch (nextDecision) {

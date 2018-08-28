@@ -65,4 +65,10 @@ public class BrainTest {
 		Decision decision = brain.makeDecision();
 		assertThat(decision, instanceOf(DepositMoneyDecision.class));
 	}
+	
+	@Test
+	public void makeDecisionRandomnessMustExist() throws Exception {
+		Brain brain = new Brain(new Random());
+		brain.makeDecision();
+	}
 }
