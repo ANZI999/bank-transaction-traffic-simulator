@@ -14,7 +14,7 @@ public class ClientBase {
 		for(int i = 0; i < clientCount; i++) {
 			Client client = population.createClient();
 			client.setEndSimulation(endSimulation);
-			client.run();
+			client.start();
 		}
 	}
 

@@ -34,6 +34,6 @@ public class ClientBaseTest {
 		
 		verify(population, times(clientCount)).createClient();
 		verify(client, times(clientCount)).setEndSimulation(any(EndSimulation.class));
-		verify(client, times(clientCount)).run();
+		verify(client, times(clientCount)).start();
 	}
 }

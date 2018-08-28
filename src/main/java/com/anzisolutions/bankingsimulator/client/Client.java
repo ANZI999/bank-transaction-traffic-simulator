@@ -4,7 +4,7 @@ import com.anzisolutions.bankingsimulator.Internet;
 import com.anzisolutions.bankingsimulator.client.decision.Brain;
 import com.anzisolutions.bankingsimulator.client.decision.Decision;
 
-public class Client implements Runnable {
+public class Client extends Thread {
 	
 	private Brain brain;
 	private Internet internet;
