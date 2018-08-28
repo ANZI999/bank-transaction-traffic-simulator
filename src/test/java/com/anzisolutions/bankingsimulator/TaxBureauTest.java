@@ -9,7 +9,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
 import com.anzisolutions.bankingsimulator.bankingsystem.BookKeeping;
 import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
 import com.anzisolutions.bankingsimulator.client.Finances;

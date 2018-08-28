@@ -9,10 +9,6 @@ import com.anzisolutions.bankingsimulator.client.Finances;
 public class TaxBureau {
 	private static int bankCount = 0;
 	
-	public static int getNextBankID() {
-		return ++bankCount;
-	}
-	
 	private ArrayList<Finances> people = new ArrayList<Finances>();
 	private ArrayList<BookKeeping> businesses = new ArrayList<BookKeeping>();
 
