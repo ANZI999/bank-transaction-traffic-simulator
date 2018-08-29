@@ -12,15 +12,18 @@ public class KillSwitchImpl implements KillSwitch {
 
 	@Override
 	public boolean isActivated() {
-		if(isActivated) {
+		boolean answer = isActivated;
+		if(answer) {
 			countDownLatch.countDown();
 		}
-		return isActivated;
+		
+		return answer;
 	}
 
 	@Override
-	public void activate() {
+	public void activate() {	
 		allowRegistering = false;
+		
 		countDownLatch = new CountDownLatch(threadCount.get());
 		isActivated = true;
 		

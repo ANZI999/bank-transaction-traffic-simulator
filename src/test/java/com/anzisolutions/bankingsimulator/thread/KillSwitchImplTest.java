@@ -1,21 +1,25 @@
 package com.anzisolutions.bankingsimulator.thread;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
+
+import java.util.ArrayList;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InOrder;
+import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.anzisolutions.bankingsimulator.thread.KillSwitch;
-import com.anzisolutions.bankingsimulator.thread.KillSwitchImpl;
+import com.anzisolutions.bankingsimulator.util.ReturnCaptor;
 
 @RunWith(SpringRunner.class)
 public class KillSwitchImplTest {
+	
+	@Mock
+	private TaskFactory taskFactory;
 	
 	@Test
 	public void activate() throws Exception {
@@ -30,18 +34,22 @@ public class KillSwitchImplTest {
 	}
 	
 	@Test
-	public void threaded() throws Exception {
-		final int threadCount = 1000;
+	public void activateOnThreads() throws Exception {
+		final int threadCount = 10;
 		KillSwitchImpl killSwitch = spy(new KillSwitchImpl());
 		
-		for(int i = 0; i < threadCount; i++) {
-			new DummyClient(killSwitch).start();
-		}
-		Thread.sleep(200);
-		killSwitch.activate();	
-		InOrder inOrder = inOrder(killSwitch);
-		inOrder.verify(killSwitch, times(1)).activate();
-		inOrder.verify(killSwitch, times(threadCount)).isActivated();
+		final ReturnCaptor<Boolean> returnCaptor = new ReturnCaptor<>();
+		ArrayList<Boolean> results = returnCaptor.getReturnedValues();
+		doAnswer(returnCaptor).when(killSwitch).isActivated();
 		
+		for(int i = 0; i < threadCount; i++) {
+			new ControlledWorker(killSwitch, taskFactory).start();
+		}
+		
+		Thread.sleep(20);
+		killSwitch.activate();	
+		long killSignalCount = results.stream().filter(p -> p != null && p == true).count();
+		assertEquals(threadCount, killSignalCount);
+		assertTrue(results.get(results.size() - 1));
 	}
 }
