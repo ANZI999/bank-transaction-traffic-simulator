@@ -1,7 +1,7 @@
 package com.anzisolutions.bankingsimulator;
 
 public class FinancialReport {
-	private static final String LINE_TEMPLATE = "%-14.14s : %.2f \n";
+	private static final String LINE_TEMPLATE = "%-14.14s : %10.2f \n";
 
 	private long salaryTotal;
 	private long cashTotal;

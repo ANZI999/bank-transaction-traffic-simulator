@@ -25,7 +25,7 @@ public class Simulator {
 		clientBase.start(1);
 		
 		try {
-			Thread.sleep(4000);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
