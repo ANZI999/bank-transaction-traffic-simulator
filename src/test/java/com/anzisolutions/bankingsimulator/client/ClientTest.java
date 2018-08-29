@@ -2,27 +2,22 @@ package com.anzisolutions.bankingsimulator.client;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.anzisolutions.bankingsimulator.Internet;
 import com.anzisolutions.bankingsimulator.client.decision.Brain;
-import com.anzisolutions.bankingsimulator.client.decision.CreateAccountDecision;
 import com.anzisolutions.bankingsimulator.client.decision.Decision;
-import com.anzisolutions.bankingsimulator.client.decision.GoToSleepDecision;
-import com.anzisolutions.bankingsimulator.client.decision.WithdrawMoneyDecision;
 import com.anzisolutions.bankingsimulator.thread.KillSwitch;
 
 @RunWith(SpringRunner.class)
@@ -37,9 +32,6 @@ public class ClientTest {
 	@Mock
 	private Brain brain;
 	
-	@Mock
-	private KillSwitch killSwitch;
-	
 	@InjectMocks
 	private Client client;	
 	
@@ -47,33 +39,14 @@ public class ClientTest {
 	public void setUp() {
 		client.setInternet(internet);
 		client.setFinances(finances);
-		client.setKillSwitch(killSwitch);
 	}
 	
 	@Test
-	public void run() throws Exception {
-		ArrayList<Decision> decisions = new ArrayList<Decision>();
-		decisions.add(mock(CreateAccountDecision.class));
-		decisions.add(mock(GoToSleepDecision.class));
-		decisions.add(mock(CreateAccountDecision.class));
-		decisions.add(mock(WithdrawMoneyDecision.class));
-		
-		OngoingStubbing<Decision> makeDecisionStub = when(brain.makeDecision());
-		for(int i = 0; i < decisions.size(); i++) {
-	    	makeDecisionStub = makeDecisionStub.thenReturn(decisions.get(i));
-	    }
-		
-		OngoingStubbing<Boolean> killSwitchStub = when(killSwitch.isActivated());
-		for(int i = 0; i < decisions.size(); i++) {
-			killSwitchStub = killSwitchStub.thenReturn(false);
-	    }
-		killSwitchStub.thenReturn(true);
-	    
-	    client.run();
-	    
-	    for(int i = 0; i < decisions.size(); i++) {
-	    	verify(decisions.get(i), times(1)).execute(internet, finances);
-	    }
+	public void getTask() throws Exception {
+		Decision decision = mock(Decision.class);
+		when(brain.makeDecision()).thenReturn(decision);
+		client.getTask();
+		verify(decision, times(1)).execute(any(Internet.class), any(Finances.class));
 	}
 	
 	@Test

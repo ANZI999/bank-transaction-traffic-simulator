@@ -3,14 +3,13 @@ package com.anzisolutions.bankingsimulator.client;
 import com.anzisolutions.bankingsimulator.Internet;
 import com.anzisolutions.bankingsimulator.client.decision.Brain;
 import com.anzisolutions.bankingsimulator.client.decision.Decision;
-import com.anzisolutions.bankingsimulator.thread.KillSwitch;
+import com.anzisolutions.bankingsimulator.thread.TaskFactory;
 
-public class Client extends Thread {
+public class Client implements TaskFactory {
 	
 	private Brain brain;
 	private Internet internet;
 	private Finances finances;
-	private KillSwitch killSwitch;
 
 	public Client(Brain brain) {
 		this.brain = brain;
@@ -23,23 +22,15 @@ public class Client extends Thread {
 	public void setFinances(Finances finances) {
 		this.finances = finances;	
 	}
-
-	public void setKillSwitch(KillSwitch killSwitch) {
-		this.killSwitch = killSwitch;
+	
+	public boolean isInitialized() {
+		return (internet != null && finances != null);
 	}
 
 	@Override
-	public void run() {
-		Decision decision;
-		
-		while(!killSwitch.isActivated()) {
-			decision = brain.makeDecision();
-			decision.execute(internet, finances);
-		}
-	}
-
-	public boolean isInitialized() {
-		return (internet != null && finances != null);
+	public void getTask() {
+		Decision decision = brain.makeDecision();
+		decision.execute(internet, finances);
 	}
 
 }

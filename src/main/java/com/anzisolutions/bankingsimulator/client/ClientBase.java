@@ -1,22 +1,24 @@
 package com.anzisolutions.bankingsimulator.client;
 
-import com.anzisolutions.bankingsimulator.thread.KillSwitch;
+import com.anzisolutions.bankingsimulator.thread.Controller;
+import com.anzisolutions.bankingsimulator.thread.Worker;
 
 public class ClientBase {
 	
 	private Population population;
-	private KillSwitch killSwitch;
+	private Controller controller;
 
-	public ClientBase(Population population, KillSwitch killSwitch) {
+	public ClientBase(Population population, Controller controller) {
 		this.population = population;
-		this.killSwitch = killSwitch;
+		this.controller = controller;
 	}
 
 	public void start(int clientCount) {
 		for(int i = 0; i < clientCount; i++) {
+			Worker worker = controller.getWorker();
 			Client client = population.createClient();
-			client.setKillSwitch(killSwitch);
-			client.start();
+			worker.setTaskFactory(client);
+			worker.start();
 		}
 	}
 

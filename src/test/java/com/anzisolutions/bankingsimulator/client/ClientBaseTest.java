@@ -4,6 +4,7 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +12,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.anzisolutions.bankingsimulator.thread.Controller;
 import com.anzisolutions.bankingsimulator.thread.KillSwitch;
+import com.anzisolutions.bankingsimulator.thread.Worker;
 
 @RunWith(SpringRunner.class)
 public class ClientBaseTest {
@@ -20,22 +23,21 @@ public class ClientBaseTest {
 	private Population population;
 	
 	@Mock
-	private KillSwitch killSwitch;
-	
-	@Mock
-	private Client client;
+	private Controller controller;
 	
 	@InjectMocks
 	private ClientBase clientBase;
 	
 	@Test
 	public void start() throws Exception {
+		Worker worker = mock(Worker.class);
+		Client client = mock(Client.class);
 		int clientCount = 10;
 		when(population.createClient()).thenReturn(client);
+		when(controller.getWorker()).thenReturn(worker);
 		clientBase.start(clientCount);
 		
-		verify(population, times(clientCount)).createClient();
-		verify(client, times(clientCount)).setKillSwitch(any(KillSwitch.class));
-		verify(client, times(clientCount)).start();
+		verify(worker, times(clientCount)).setTaskFactory(client);
+		verify(worker, times(clientCount)).start();		
 	}
 }
