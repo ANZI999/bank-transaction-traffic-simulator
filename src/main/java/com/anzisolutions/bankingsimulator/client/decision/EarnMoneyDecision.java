@@ -15,7 +15,7 @@ public class EarnMoneyDecision implements Decision {
 
 	@Override
 	public void execute(Internet internet, Finances finances) {
-		int salary = randomness.nextInt(1000000000);
+		long salary = Math.max(30000, Math.round(200000*(1.0 + randomness.nextGaussian())));
 		finances.payday(salary);
 	}
 

@@ -38,10 +38,10 @@ public class EarnMoneyDecisionTest {
 	
 	@Test
 	public void execute() throws Exception {
-		int salary = 15000;
+		double gaussian = -0.8;
+		long salary = 40000;
 		
-		when(randomness.nextInt(any(Integer.class)))
-				.thenReturn(salary);
+		when(randomness.nextGaussian()).thenReturn(gaussian);
 		
 		assertEquals(0, finances.getCash());
 		decision.execute(internet, finances);

@@ -26,7 +26,7 @@ public class Finances {
 		return cash;
 	}
 
-	public void payday(int salary) {
+	public void payday(long salary) {
 		cash += salary;
 		incomeTotal += salary;
 	}

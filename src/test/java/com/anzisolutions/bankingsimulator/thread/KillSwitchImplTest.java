@@ -48,7 +48,7 @@ public class KillSwitchImplTest {
 			worker.start();
 		}
 		
-		Thread.sleep(20);
+		Thread.sleep(60);
 		killSwitch.activate();	
 		long killSignalCount = results.stream().filter(p -> p != null && p == true).count();
 		assertEquals(threadCount, killSignalCount);
