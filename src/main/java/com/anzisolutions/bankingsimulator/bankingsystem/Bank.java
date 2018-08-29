@@ -2,11 +2,16 @@ package com.anzisolutions.bankingsimulator.bankingsystem;
 
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.anzisolutions.bankingsimulator.Internet;
 import com.anzisolutions.bankingsimulator.exception.InsufficientFundsException;
 import com.anzisolutions.bankingsimulator.exception.LoginFailedException;
 
 public class Bank {
+	
+	final Logger logger = LoggerFactory.getLogger(Bank.class);
 	
 	private int id; 
 	private Internet internet;

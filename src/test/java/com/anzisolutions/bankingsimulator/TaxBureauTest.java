@@ -2,9 +2,7 @@ package com.anzisolutions.bankingsimulator;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Random;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

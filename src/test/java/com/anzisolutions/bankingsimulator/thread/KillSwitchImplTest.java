@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.spy;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +39,7 @@ public class KillSwitchImplTest {
 		KillSwitchImpl killSwitch = spy(new KillSwitchImpl());
 		
 		final ReturnCaptor<Boolean> returnCaptor = new ReturnCaptor<>();
-		ArrayList<Boolean> results = returnCaptor.getReturnedValues();
+		CopyOnWriteArrayList<Boolean> results = returnCaptor.getReturnedValues();
 		doAnswer(returnCaptor).when(killSwitch).isActivated();
 		
 		for(int i = 0; i < threadCount; i++) {

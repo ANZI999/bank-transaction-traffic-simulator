@@ -1,14 +1,14 @@
 package com.anzisolutions.bankingsimulator.util;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 public class ReturnCaptor<T> implements Answer<T> {
-    private ArrayList<T> returnedValues = new ArrayList<T>();
+    private CopyOnWriteArrayList<T> returnedValues = new CopyOnWriteArrayList<T>();
     
-    public ArrayList<T> getReturnedValues() {
+    public CopyOnWriteArrayList<T> getReturnedValues() {
         return returnedValues;
     }
 

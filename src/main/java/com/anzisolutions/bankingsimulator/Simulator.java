@@ -22,7 +22,7 @@ public class Simulator {
 		BankingSystem bankSystem = new BankingSystem(taxBureau, internet);
 		
 		bankSystem.start(2);
-		clientBase.start(1);
+		clientBase.start(100);
 		
 		try {
 			Thread.sleep(1000);

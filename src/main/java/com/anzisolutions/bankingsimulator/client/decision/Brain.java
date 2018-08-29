@@ -5,10 +5,10 @@ import java.util.Random;
 public class Brain {
 	public static final int CREATE_ACCOUNT = 0;
 	public static final int GO_TO_SLEEP = 1;
-	public static final int TRANSFER_MONEY = 2;
+	public static final int EARN_MONEY = 2;
 	public static final int WITHDRAW_MONEY = 3;
 	public static final int DEPOSIT_MONEY = 4;
-	public static final int EARN_MONEY = 5;
+	public static final int TRANSFER_MONEY = 5;
 	
 	private Random randomness;
 

@@ -1,7 +1,6 @@
 package com.anzisolutions.bankingsimulator.client.decision;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.Random;
@@ -14,8 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.anzisolutions.bankingsimulator.Internet;
 import com.anzisolutions.bankingsimulator.TaxBureau;
-import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
-import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
 import com.anzisolutions.bankingsimulator.client.Finances;
 
 @RunWith(SpringRunner.class)
