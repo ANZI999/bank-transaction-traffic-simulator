@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.CountDownLatch;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,6 +78,40 @@ public class BookKeepingTest {
 		IBAN ibanTwo = bookKeeping.addAccount("user-2");
 		bookKeeping.getAccount(ibanTwo).increaseBalance(depositTwo);
 		assertEquals(total, bookKeeping.getAccountTotal());
+    }
+	
+	@Test
+    public void concurrency() throws Exception {
+		String personIDTemplate = "person-%d";
+		int threadCount = 1000;
+		final int accountsPerThread = 10;
+		final BookKeeping bookKeeping = new BookKeeping(BANK_ID);
+		final CountDownLatch latch = new CountDownLatch(threadCount);
+		
+		for(int i = 0; i < threadCount; i++) {
+			final String personID = String.format(personIDTemplate, i);
+			
+			Runnable runnable = () -> {
+				IBAN iban;
+				try {
+					for(int j = 0; j < accountsPerThread; j++) {
+						iban = bookKeeping.addAccount(personID);
+						bookKeeping.getAccount(iban);
+					}
+				} finally {
+					latch.countDown();
+				}
+			}; 			
+			new Thread(runnable).start();	
+		}
+		latch.await();
+		String personID;
+		for(int i = 0; i < threadCount; i++) {
+			personID = String.format(personIDTemplate, i);
+			ArrayList<IBAN> accounts = bookKeeping.getUserAccounts(personID);
+			assertEquals(accountsPerThread, accounts.size());
+		}
+		
     }
 	
 }

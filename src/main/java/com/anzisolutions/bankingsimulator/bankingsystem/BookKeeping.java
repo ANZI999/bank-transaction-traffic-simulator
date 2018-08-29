@@ -1,18 +1,18 @@
 package com.anzisolutions.bankingsimulator.bankingsystem;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class BookKeeping {
 	
 	private int bankID;
-	private HashMap<IBAN, Account> accounts;
-	private HashMap<String, ArrayList<IBAN>> userIndex;
+	private ConcurrentHashMap<IBAN, Account> accounts;
+	private ConcurrentHashMap<String, ArrayList<IBAN>> userIndex;
 	
 	public BookKeeping(int bankID) {
 		this.bankID = bankID;
-		this.accounts = new HashMap<IBAN, Account>();
-		this.userIndex = new HashMap<String, ArrayList<IBAN>>();
+		this.accounts = new ConcurrentHashMap<IBAN, Account>();
+		this.userIndex = new ConcurrentHashMap<String, ArrayList<IBAN>>();
 	}
 	
 	public Account getAccount(IBAN iban) {
