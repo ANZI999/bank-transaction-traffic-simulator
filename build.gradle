@@ -27,5 +27,6 @@ targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile("ch.qos.logback:logback-classic")
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
