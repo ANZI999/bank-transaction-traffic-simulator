@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.anzisolutions.bankingsimulator.bankingsystem.Bank;
 import com.anzisolutions.bankingsimulator.bankingsystem.BookKeeping;
 import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
 import com.anzisolutions.bankingsimulator.client.Finances;
@@ -39,19 +40,6 @@ public class TaxBureauTest {
 	}
 	
 	@Test
-	public void getTotalSalaryFund() throws Exception {		
-		int individualSalry = 500000;
-		int clientCount = 5;
-		
-		assertEquals(0, taxBureau.getTotalSalary());
-		for(int i = 0; i < clientCount; i++) {
-			Finances finances = taxBureau.registerClient();
-			finances.payday(individualSalry);
-		}
-		assertEquals(clientCount*individualSalry, taxBureau.getTotalSalary());
-	}
-	
-	@Test
 	public void registerBankBookKeepingIDsMustBeUnique() throws Exception {		
 		int bankCount = 3;
 		HashSet<String> ids = new HashSet<String>();
@@ -64,27 +52,57 @@ public class TaxBureauTest {
 	}
 	
 	@Test
-	public void aggregate() throws Exception {		
-		int bankCount = 3;
+	public void aggregateSalary() throws Exception {		
 		int clientCount = 10;
+		long salary = 1300;
 		
-		Random random = new Random();
-		int salaryTotal = 0;
-		int depositTotal = 0;
-		BookKeeping[] banks = new BookKeeping[bankCount];
-		for(int i = 0; i <banks.length; i++) {
-			banks[i] = taxBureau.registerBankBookKeeping();
-		}
-		
-		Finances[] clients = new Finances[bankCount];
+		Finances[] clients = new Finances[clientCount];
 		for(int i = 0; i <clients.length; i++) {
-			int salary = random.nextInt(100000);
-			salaryTotal += salary;
 			clients[i] = taxBureau.registerClient();
 			clients[i].payday(salary);
 		}
 		
 		FinancialReport report = taxBureau.aggregate();
-		assertEquals(salaryTotal, report.getSalaryTotal());
+		assertEquals(salary*clientCount, report.getSalaryTotal());
+	}
+	
+	@Test
+	public void aggregateCash() throws Exception {		
+		int clientCount = 10;
+		long spendAmount = 1200;
+		long salary = 1600;
+		
+		Finances[] clients = new Finances[clientCount];
+		for(int i = 0; i <clients.length; i++) {
+			clients[i] = taxBureau.registerClient();
+			clients[i].payday(salary);
+		}
+		clients[clients.length - 1].spendCash(spendAmount);
+		FinancialReport report = taxBureau.aggregate();
+		assertEquals(salary*clientCount - spendAmount, report.getCashTotal());
+	}
+	
+	@Test
+	public void aggregateDeposits() throws Exception {		
+		int clientsInBankCount = 3;
+		long deposit = 16700;
+		
+		Bank bankOne = new Bank(taxBureau.registerBankBookKeeping());
+		Bank bankTwo = new Bank(taxBureau.registerBankBookKeeping());
+		
+		String bankOneClient;
+		String bankTwoClient;
+		IBAN ibanOne;
+		IBAN ibanTwo;
+		for(int i = 0; i < clientsInBankCount; i++) {
+			bankOneClient = "client-1-" + i;
+			bankTwoClient = "client-2-" + i;
+			ibanOne = bankOne.createAccount(bankOneClient);
+			ibanTwo = bankTwo.createAccount(bankTwoClient);
+			bankOne.deposit(bankOneClient, ibanOne, deposit);
+			bankTwo.deposit(bankTwoClient, ibanTwo, deposit);
+		}
+		FinancialReport report = taxBureau.aggregate();
+		assertEquals(2*clientsInBankCount*deposit, report.getDepositTotal());
 	}
 }

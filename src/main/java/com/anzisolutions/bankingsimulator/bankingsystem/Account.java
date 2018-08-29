@@ -17,7 +17,7 @@ public class Account {
 		return balance;
 	}
 
-	public void increaseBalance(int amount) {
+	public void increaseBalance(long amount) {
 		balance += amount;
 	}
 	

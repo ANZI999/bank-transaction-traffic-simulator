@@ -21,11 +21,11 @@ public class Simulator {
 	
 		BankingSystem bankSystem = new BankingSystem(taxBureau, internet);
 		
-		bankSystem.start(1);
+		bankSystem.start(2);
 		clientBase.start(1);
 		
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(4000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

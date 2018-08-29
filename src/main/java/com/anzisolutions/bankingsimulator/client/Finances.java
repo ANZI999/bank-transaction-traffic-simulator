@@ -43,7 +43,7 @@ public class Finances {
 		ownedIbans.add(iban);		
 	}
 
-	public void spendCash(int amount) throws InsufficientFundsException {
+	public void spendCash(long amount) throws InsufficientFundsException {
 		if(amount > cash) {
 			throw new InsufficientFundsException();
 		}

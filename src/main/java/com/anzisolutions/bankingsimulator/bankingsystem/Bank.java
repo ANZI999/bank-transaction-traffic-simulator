@@ -29,7 +29,7 @@ public class Bank {
 		return this.id;		
 	}
 
-	public void deposit(String personID, IBAN iban, int amount) throws LoginFailedException {
+	public void deposit(String personID, IBAN iban, long amount) throws LoginFailedException {
 		Account account = getAuthentiactedAccount(personID, iban);
 		account.increaseBalance(amount);
 	}

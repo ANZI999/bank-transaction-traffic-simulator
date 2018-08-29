@@ -20,29 +20,37 @@ public class TaxBureau implements Aggregator {
 		return clientFinances;
 	}
 
-	public int getTotalSalary() {
-		return people.stream()
-				.map(person -> person.getIncomeTotal())
-				.mapToInt(Integer::intValue).sum();
-	}
-
 	public BookKeeping registerBankBookKeeping() {
 		BookKeeping bookKeeping = new BookKeeping(++bankCount);
 		businesses.add(bookKeeping);
 		return bookKeeping;
 	}
-
-	public int getTotalDeposits() {
-		return businesses.stream()
-				.map(business -> business.getAccountTotal())
-				.mapToInt(Integer::intValue).sum();
-	}
-
+	
 	@Override
 	public FinancialReport aggregate() {
 		FinancialReport report = new FinancialReport();
 		report.setSalaryTotal(getTotalSalary());
+		report.setCashTotal(getTotalCash());
+		report.setDepositTotal(getTotalDeposits());
 		return report;
+	}
+
+	private long getTotalDeposits() {
+		return businesses.stream()
+				.map(business -> business.getAccountTotal())
+				.mapToInt(Integer::intValue).sum();
+	}
+	
+	private long getTotalSalary() {
+		return people.stream()
+				.map(person -> person.getIncomeTotal())
+				.mapToInt(Integer::intValue).sum();
+	}
+	
+	private long getTotalCash() {
+		return people.stream()
+				.map(person -> person.getCash())
+				.mapToInt(Integer::intValue).sum();
 	}
 
 }
