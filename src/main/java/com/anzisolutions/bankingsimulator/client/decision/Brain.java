@@ -8,6 +8,7 @@ public class Brain {
 	public static final int TRANSFER_MONEY = 2;
 	public static final int WITHDRAW_MONEY = 3;
 	public static final int DEPOSIT_MONEY = 4;
+	public static final int EARN_MONEY = 5;
 	
 	private Random randomness;
 
@@ -16,7 +17,7 @@ public class Brain {
 	}
 
 	public Decision makeDecision() {
-		int nextDecision = randomness.nextInt(5);
+		int nextDecision = randomness.nextInt(6);
 		
 		Decision decision;
         switch (nextDecision) {
@@ -32,8 +33,11 @@ public class Brain {
             case WITHDRAW_MONEY:  
             	decision = new WithdrawMoneyDecision(randomness);
                 break;
-            default:  
+            case DEPOSIT_MONEY:  
             	decision = new DepositMoneyDecision(randomness);
+                break;
+            default:  
+            	decision = new EarnMoneyDecision(randomness);
         }
         
 		return decision;

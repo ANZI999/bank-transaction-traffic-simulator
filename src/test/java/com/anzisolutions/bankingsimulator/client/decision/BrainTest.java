@@ -67,6 +67,15 @@ public class BrainTest {
 	}
 	
 	@Test
+	public void nextDecisionEarnSalary() throws Exception {
+		when(randomness.nextInt(any(Integer.class)))
+				.thenReturn(Brain.EARN_MONEY);
+		
+		Decision decision = brain.makeDecision();
+		assertThat(decision, instanceOf(EarnMoneyDecision.class));
+	}
+	
+	@Test
 	public void makeDecisionRandomnessMustExist() throws Exception {
 		Brain brain = new Brain(new Random());
 		brain.makeDecision();
