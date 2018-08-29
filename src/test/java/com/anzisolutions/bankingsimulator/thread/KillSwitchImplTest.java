@@ -43,7 +43,9 @@ public class KillSwitchImplTest {
 		doAnswer(returnCaptor).when(killSwitch).isActivated();
 		
 		for(int i = 0; i < threadCount; i++) {
-			new ControlledWorker(killSwitch, taskFactory).start();
+			Worker worker = new ControlledWorker(killSwitch);
+			worker.setTaskFactory(taskFactory);
+			worker.start();
 		}
 		
 		Thread.sleep(20);

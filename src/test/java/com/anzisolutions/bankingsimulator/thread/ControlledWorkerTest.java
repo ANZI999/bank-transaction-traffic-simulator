@@ -40,6 +40,7 @@ public class ControlledWorkerTest {
 		    return true;
 		});
 		
+		controlledWorker.setTaskFactory(taskFactory);
 		controlledWorker.start();
 		latch.await();
 		verify(killSwitch, times(1)).registerThread();
