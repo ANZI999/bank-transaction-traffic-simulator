@@ -1,20 +1,20 @@
 package com.anzisolutions.bankingsimulator.thread;
 
-public class ControlledWork implements Runnable {
+public class ControlledWorker implements Runnable {
 	
 	private KillSwitch killSwitch;
-	private Worker worker;
+	private TaskFactory taskFactory;
 
-	public ControlledWork(KillSwitch killSwitch, Worker worker) {
+	public ControlledWorker(KillSwitch killSwitch, TaskFactory taskFactory) {
 		this.killSwitch = killSwitch;
-		this.worker = worker;
+		this.taskFactory = taskFactory;
 	}
 
 	@Override
 	public void run() {
 		if(killSwitch.registerThread()) {
 			while(!killSwitch.isActivated()) {
-				worker.doWork();
+				taskFactory.getTask();
 			}
 		}
 		

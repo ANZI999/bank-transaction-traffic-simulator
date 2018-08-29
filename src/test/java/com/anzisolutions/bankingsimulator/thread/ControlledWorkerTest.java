@@ -14,16 +14,16 @@ import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-public class ControlledWorkTest {
+public class ControlledWorkerTest {
 
 	@Mock
 	private KillSwitch killSwitch;
 	
 	@Mock
-	private Worker worker;
+	private TaskFactory taskFactory;
 
 	@InjectMocks
-	private ControlledWork controlledWork;
+	private ControlledWorker controlledWorker;
 	
 	@Test
 	public void run() throws Exception {
@@ -40,10 +40,10 @@ public class ControlledWorkTest {
 		    return true;
 		});
 		
-		new Thread(controlledWork).start();
+		new Thread(controlledWorker).start();
 		latch.await();
 		verify(killSwitch, times(1)).registerThread();
-		verify(worker, times(testIterationCount)).doWork();
+		verify(taskFactory, times(testIterationCount)).getTask();
 		verify(killSwitch, times(testIterationCount + 1)).isActivated();
 	}
 }
