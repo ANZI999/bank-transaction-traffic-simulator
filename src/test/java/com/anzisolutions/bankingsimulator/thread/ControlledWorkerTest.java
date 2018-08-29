@@ -40,7 +40,7 @@ public class ControlledWorkerTest {
 		    return true;
 		});
 		
-		new Thread(controlledWorker).start();
+		controlledWorker.start();
 		latch.await();
 		verify(killSwitch, times(1)).registerThread();
 		verify(taskFactory, times(testIterationCount)).getTask();

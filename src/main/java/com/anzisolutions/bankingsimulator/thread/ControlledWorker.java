@@ -1,6 +1,6 @@
 package com.anzisolutions.bankingsimulator.thread;
 
-public class ControlledWorker implements Runnable {
+public class ControlledWorker extends Thread {
 	
 	private KillSwitch killSwitch;
 	private TaskFactory taskFactory;
