@@ -5,8 +5,9 @@ import java.util.UUID;
 
 import com.anzisolutions.bankingsimulator.bankingsystem.BookKeeping;
 import com.anzisolutions.bankingsimulator.client.Finances;
+import com.anzisolutions.bankingsimulator.thread.Aggregator;
 
-public class TaxBureau {
+public class TaxBureau implements Aggregator {
 	private static int bankCount = 0;
 	
 	private ArrayList<Finances> people = new ArrayList<Finances>();
@@ -19,7 +20,7 @@ public class TaxBureau {
 		return clientFinances;
 	}
 
-	public int getTotalSalaryFund() {
+	public int getTotalSalary() {
 		return people.stream()
 				.map(person -> person.getIncomeTotal())
 				.mapToInt(Integer::intValue).sum();
@@ -35,6 +36,13 @@ public class TaxBureau {
 		return businesses.stream()
 				.map(business -> business.getAccountTotal())
 				.mapToInt(Integer::intValue).sum();
+	}
+
+	@Override
+	public FinancialReport aggregate() {
+		FinancialReport report = new FinancialReport();
+		report.setSalaryTotal(getTotalSalary());
+		return report;
 	}
 
 }

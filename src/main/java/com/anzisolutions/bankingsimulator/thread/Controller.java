@@ -1,5 +1,7 @@
 package com.anzisolutions.bankingsimulator.thread;
 
+import com.anzisolutions.bankingsimulator.FinancialReport;
+
 public class Controller {
 
 	private KillSwitch killSwitch;
@@ -17,9 +19,9 @@ public class Controller {
 		return new ControlledWorker(killSwitch);
 	}
 
-	public void finish() {
+	public FinancialReport finish() {
 		killSwitch.activate();
-		aggreagtor.aggregate();
+		return aggreagtor.aggregate();
 	}
 	
 }

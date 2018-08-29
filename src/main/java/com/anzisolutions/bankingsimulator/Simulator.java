@@ -14,7 +14,7 @@ public class Simulator {
 		KillSwitch killSwitch = new KillSwitchImpl();
 		
 		Controller controller = new Controller(killSwitch);
-		
+		controller.setAggregator(taxBureau);
 		
 		Population population = new Population(taxBureau, internet);
 		ClientBase clientBase = new ClientBase(population, controller);
@@ -29,7 +29,7 @@ public class Simulator {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		controller.finish();
+		System.out.println(controller.finish());
 		
 	}
 }

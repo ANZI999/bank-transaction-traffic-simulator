@@ -18,7 +18,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.anzisolutions.bankingsimulator.Internet;
 import com.anzisolutions.bankingsimulator.client.decision.Brain;
 import com.anzisolutions.bankingsimulator.client.decision.Decision;
-import com.anzisolutions.bankingsimulator.thread.KillSwitch;
 
 @RunWith(SpringRunner.class)
 public class ClientTest {
