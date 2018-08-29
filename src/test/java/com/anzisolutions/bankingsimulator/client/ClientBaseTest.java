@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.anzisolutions.bankingsimulator.thread.KillSwitch;
+
 @RunWith(SpringRunner.class)
 public class ClientBaseTest {
 	
@@ -18,7 +20,7 @@ public class ClientBaseTest {
 	private Population population;
 	
 	@Mock
-	private EndSimulation endSimulation;
+	private KillSwitch killSwitch;
 	
 	@Mock
 	private Client client;
@@ -33,7 +35,7 @@ public class ClientBaseTest {
 		clientBase.start(clientCount);
 		
 		verify(population, times(clientCount)).createClient();
-		verify(client, times(clientCount)).setEndSimulation(any(EndSimulation.class));
+		verify(client, times(clientCount)).setKillSwitch(any(KillSwitch.class));
 		verify(client, times(clientCount)).start();
 	}
 }

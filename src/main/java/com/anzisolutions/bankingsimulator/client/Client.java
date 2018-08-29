@@ -3,13 +3,14 @@ package com.anzisolutions.bankingsimulator.client;
 import com.anzisolutions.bankingsimulator.Internet;
 import com.anzisolutions.bankingsimulator.client.decision.Brain;
 import com.anzisolutions.bankingsimulator.client.decision.Decision;
+import com.anzisolutions.bankingsimulator.thread.KillSwitch;
 
 public class Client extends Thread {
 	
 	private Brain brain;
 	private Internet internet;
 	private Finances finances;
-	private EndSimulation endSimulation;
+	private KillSwitch killSwitch;
 
 	public Client(Brain brain) {
 		this.brain = brain;
@@ -23,15 +24,15 @@ public class Client extends Thread {
 		this.finances = finances;	
 	}
 
-	public void setEndSimulation(EndSimulation endSimulation) {
-		this.endSimulation = endSimulation;
+	public void setKillSwitch(KillSwitch killSwitch) {
+		this.killSwitch = killSwitch;
 	}
 
 	@Override
 	public void run() {
 		Decision decision;
 		
-		while(!endSimulation.isTurnedOn()) {
+		while(!killSwitch.isActivated()) {
 			decision = brain.makeDecision();
 			decision.execute(internet, finances);
 		}

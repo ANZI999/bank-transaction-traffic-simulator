@@ -1,19 +1,21 @@
 package com.anzisolutions.bankingsimulator.client;
 
+import com.anzisolutions.bankingsimulator.thread.KillSwitch;
+
 public class ClientBase {
 	
 	private Population population;
-	private EndSimulation endSimulation;
+	private KillSwitch killSwitch;
 
-	public ClientBase(Population population, EndSimulation endSimulation) {
+	public ClientBase(Population population, KillSwitch killSwitch) {
 		this.population = population;
-		this.endSimulation = endSimulation;
+		this.killSwitch = killSwitch;
 	}
 
 	public void start(int clientCount) {
 		for(int i = 0; i < clientCount; i++) {
 			Client client = population.createClient();
-			client.setEndSimulation(endSimulation);
+			client.setKillSwitch(killSwitch);
 			client.start();
 		}
 	}

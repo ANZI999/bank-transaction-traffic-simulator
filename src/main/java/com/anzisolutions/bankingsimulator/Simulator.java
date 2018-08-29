@@ -2,17 +2,18 @@ package com.anzisolutions.bankingsimulator;
 
 import com.anzisolutions.bankingsimulator.bankingsystem.BankingSystem;
 import com.anzisolutions.bankingsimulator.client.ClientBase;
-import com.anzisolutions.bankingsimulator.client.EndSimulationImpl;
 import com.anzisolutions.bankingsimulator.client.Population;
+import com.anzisolutions.bankingsimulator.thread.KillSwitch;
+import com.anzisolutions.bankingsimulator.thread.KillSwitchImpl;
 
 public class Simulator {
 	public static void main(String[] args) {
 		TaxBureau taxBureau = new TaxBureau();
 		Internet internet = InternetImpl.getInsatnce();
 		
-		EndSimulationImpl endSimulation = new EndSimulationImpl();
+		KillSwitch killSwitch = new KillSwitchImpl();
 		Population population = new Population(taxBureau, internet);
-		ClientBase clientBase = new ClientBase(population, endSimulation);
+		ClientBase clientBase = new ClientBase(population, killSwitch);
 	
 		BankingSystem bankSystem = new BankingSystem(taxBureau, internet);
 		
@@ -25,7 +26,7 @@ public class Simulator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		endSimulation.turnOn();
+		killSwitch.activate();
 		
 	}
 }

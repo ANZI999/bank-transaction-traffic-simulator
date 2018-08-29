@@ -23,6 +23,7 @@ import com.anzisolutions.bankingsimulator.client.decision.CreateAccountDecision;
 import com.anzisolutions.bankingsimulator.client.decision.Decision;
 import com.anzisolutions.bankingsimulator.client.decision.GoToSleepDecision;
 import com.anzisolutions.bankingsimulator.client.decision.WithdrawMoneyDecision;
+import com.anzisolutions.bankingsimulator.thread.KillSwitch;
 
 @RunWith(SpringRunner.class)
 public class ClientTest {
@@ -37,7 +38,7 @@ public class ClientTest {
 	private Brain brain;
 	
 	@Mock
-	private EndSimulation endSimulation;
+	private KillSwitch killSwitch;
 	
 	@InjectMocks
 	private Client client;	
@@ -46,7 +47,7 @@ public class ClientTest {
 	public void setUp() {
 		client.setInternet(internet);
 		client.setFinances(finances);
-		client.setEndSimulation(endSimulation);
+		client.setKillSwitch(killSwitch);
 	}
 	
 	@Test
@@ -62,11 +63,11 @@ public class ClientTest {
 	    	makeDecisionStub = makeDecisionStub.thenReturn(decisions.get(i));
 	    }
 		
-		OngoingStubbing<Boolean> endSimulationStub = when(endSimulation.isTurnedOn());
+		OngoingStubbing<Boolean> killSwitchStub = when(killSwitch.isActivated());
 		for(int i = 0; i < decisions.size(); i++) {
-			endSimulationStub = endSimulationStub.thenReturn(false);
+			killSwitchStub = killSwitchStub.thenReturn(false);
 	    }
-		endSimulationStub.thenReturn(true);
+		killSwitchStub.thenReturn(true);
 	    
 	    client.run();
 	    
