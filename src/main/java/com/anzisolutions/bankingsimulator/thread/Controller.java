@@ -5,14 +5,14 @@ import com.anzisolutions.bankingsimulator.FinancialReport;
 public class Controller {
 
 	private KillSwitch killSwitch;
-	private Aggregator aggreagtor;
+	private Aggregator aggreagator;
 
 	public Controller(KillSwitch killSwitch) {
 		this.killSwitch = killSwitch;
 	}
 	
-	public void setAggregator(Aggregator aggreagtor) {
-		this.aggreagtor = aggreagtor;
+	public void setAggregator(Aggregator aggreagator) {
+		this.aggreagator = aggreagator;
 	}
 
 	public Worker getWorker() {
@@ -21,7 +21,7 @@ public class Controller {
 
 	public FinancialReport finish() {
 		killSwitch.activate();
-		return aggreagtor.aggregate();
+		return aggreagator.aggregate();
 	}
 	
 }

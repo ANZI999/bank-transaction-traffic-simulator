@@ -49,6 +49,7 @@ public class Bank {
 	}
 	
 	public void transfer(String personID, IBAN fromIban, IBAN toIban, int amount) throws InsufficientFundsException, LoginFailedException {
+		logger.info(personID +" - "+ fromIban +" -> "+ toIban +" : "+ amount);
 		Account fromAccount = getAuthentiactedAccount(personID, fromIban);
 		fromAccount.decreaseBalance(amount);
 		int toBankID = toIban.getBankID();

@@ -1,28 +1,23 @@
 package com.anzisolutions.bankingsimulator;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.anzisolutions.bankingsimulator.bankingsystem.BankingSystem;
 import com.anzisolutions.bankingsimulator.client.ClientBase;
-import com.anzisolutions.bankingsimulator.client.Population;
 import com.anzisolutions.bankingsimulator.thread.Controller;
-import com.anzisolutions.bankingsimulator.thread.KillSwitch;
-import com.anzisolutions.bankingsimulator.thread.KillSwitchImpl;
 
 public class Simulator {
 	public static void main(String[] args) {
-		TaxBureau taxBureau = new TaxBureau();
-		Internet internet = InternetImpl.getInsatnce();
-		KillSwitch killSwitch = new KillSwitchImpl();
+		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 		
-		Controller controller = new Controller(killSwitch);
-		controller.setAggregator(taxBureau);
+		Controller controller = context.getBean("controller", Controller.class);
+		ClientBase clientBase = (ClientBase) context.getBean("clientBase", ClientBase.class); 	
+		BankingSystem bankingSystem = context.getBean("bankingSystem", BankingSystem.class);
 		
-		Population population = new Population(taxBureau, internet);
-		ClientBase clientBase = new ClientBase(population, controller);
-	
-		BankingSystem bankSystem = new BankingSystem(taxBureau, internet);
-		
-		bankSystem.start(2);
-		clientBase.start(100);
+		bankingSystem.start(2);
+		clientBase.start(2);
 		
 		try {
 			Thread.sleep(1000);
@@ -30,6 +25,6 @@ public class Simulator {
 			e.printStackTrace();
 		}
 		System.out.println(controller.finish());
-		
+		((AbstractApplicationContext) context).close();
 	}
 }

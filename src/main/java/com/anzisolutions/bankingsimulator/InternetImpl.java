@@ -8,20 +8,8 @@ import com.anzisolutions.bankingsimulator.bankingsystem.IBAN;
 
 public class InternetImpl implements Internet {
 
-	private static InternetImpl instance;
-
-	public static InternetImpl getInsatnce() {
-		if (instance == null) {
-			instance = new InternetImpl();
-		}
-		return instance;
-	}
-
 	private ArrayList<IBAN> ibans = new ArrayList<IBAN>();
 	private HashMap<String, Bank> banks = new HashMap<String, Bank>();
-
-	private InternetImpl() {
-	}
 
 	@Override
 	public void publishIBAN(IBAN iban) {
@@ -41,10 +29,6 @@ public class InternetImpl implements Internet {
 	@Override
 	public HashMap<String, Bank> getBanks() {
 		return banks;
-	}
-
-	public void reset() {
-		ibans = new ArrayList<IBAN>();
 	}
 
 	@Override

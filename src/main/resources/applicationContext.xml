@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- <context:component-scan base-package="com.in28minutes.spring.basics"/> -->
+
+	<bean id="taxBureau" class="com.anzisolutions.bankingsimulator.TaxBureau" />
+	<bean id="internetImpl" class="com.anzisolutions.bankingsimulator.InternetImpl" scope="singleton" />
+	<bean id="killSwitchImpl" class="com.anzisolutions.bankingsimulator.thread.KillSwitchImpl" scope="singleton" />
+	
+	<bean id="controller" class="com.anzisolutions.bankingsimulator.thread.Controller" scope="singleton">
+		<constructor-arg ref="killSwitchImpl"/>
+		<property name="aggregator" ref="taxBureau"/>
+	</bean>
+	
+	<bean id="bankingSystem" class="com.anzisolutions.bankingsimulator.bankingsystem.BankingSystem" scope="singleton">
+		<constructor-arg name="taxBureau" ref="taxBureau"/>
+		<constructor-arg name="internet" ref="internetImpl"/>
+	</bean>
+	
+	<bean id="clientBase" class="com.anzisolutions.bankingsimulator.client.ClientBase" scope="singleton">
+		<constructor-arg name="population">
+			<bean class="com.anzisolutions.bankingsimulator.client.Population">
+				<constructor-arg name="taxBureau" ref="taxBureau"/>
+				<constructor-arg name="internet" ref="internetImpl"/>
+			</bean>	
+		</constructor-arg>
+		<constructor-arg name="controller" ref="controller"/>
+	</bean>
+</beans>
